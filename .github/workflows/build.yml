@@ -19,7 +19,6 @@ on:
 
 jobs:
 
-  # ── 1. Вычисляет и создаёт git-тег ────────────────────────────────────────
   tag:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -46,7 +45,6 @@ jobs:
           git tag ${{ steps.ver.outputs.version }}
           git push origin ${{ steps.ver.outputs.version }}
 
-  # ── 2. Сборка на нативных раннерах (CGO требует нативного компилятора) ───
   build:
     needs: tag
     if: github.event_name == 'push'
@@ -68,24 +66,21 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      # ── macOS: fat binary через lipo + fyne package ──────────────────────
       - name: Install fyne CLI
-        if: runner.os == 'macOS'
         run: go install fyne.io/tools/cmd/fyne@latest
 
-      - name: Generate bundled.go (macOS)
-        if: runner.os == 'macOS'
+      - name: Generate bundled.go
         run: fyne bundle -o bundled.go -name resourceIcon assets/Icon.png
 
       - name: Build macOS universal
         if: runner.os == 'macOS'
         run: |
           GOARCH=amd64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            -appversion ${{ needs.tag.outputs.version }}
+            --app-version ${{ needs.tag.outputs.version }}
           mv Compiler.app Compiler_amd64.app
 
           GOARCH=arm64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            -appversion ${{ needs.tag.outputs.version }}
+            --app-version ${{ needs.tag.outputs.version }}
           mv Compiler.app Compiler_arm64.app
 
           cp -r Compiler_amd64.app Compiler.app
@@ -95,11 +90,6 @@ jobs:
             -output "Compiler.app/Contents/MacOS/Compiler"
 
           zip -r ${{ matrix.name }}.zip Compiler.app
-
-      # ── Windows ──────────────────────────────────────────────────────────
-      - name: Generate bundled.go (Windows)
-        if: runner.os == 'Windows'
-        run: go run fyne.io/tools/cmd/fyne@latest bundle -o bundled.go -name resourceIcon assets/Icon.png
 
       - name: Build Windows
         if: runner.os == 'Windows'
@@ -111,16 +101,11 @@ jobs:
             -o compiler.exe .
           Compress-Archive -Path compiler.exe -DestinationPath "${{ matrix.name }}.zip"
 
-      # ── Linux ─────────────────────────────────────────────────────────────
       - name: Install Linux deps
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update -q
           sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
-
-      - name: Generate bundled.go (Linux)
-        if: runner.os == 'Linux'
-        run: go run fyne.io/tools/cmd/fyne@latest bundle -o bundled.go -name resourceIcon assets/Icon.png
 
       - name: Build Linux
         if: runner.os == 'Linux'
@@ -139,7 +124,6 @@ jobs:
             ${{ matrix.name }}.tar.gz
           if-no-files-found: ignore
 
-  # ── 3. Создаёт pre-release и прикрепляет артефакты ───────────────────────
   pre-release:
     needs: [tag, build]
     if: github.event_name == 'push'
@@ -162,7 +146,6 @@ jobs:
             *.zip
             *.tar.gz
 
-  # ── 4. Ручное создание финального релиза из существующего тега ───────────
   release:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest

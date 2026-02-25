@@ -19,13 +19,11 @@ on:
 
 jobs:
 
-  tag:
+  version:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.ver.outputs.version }}
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,15 +36,8 @@ jobs:
           COUNT=$(git rev-list --count HEAD)
           echo "version=v${BASE}-${COUNT}" >> $GITHUB_OUTPUT
 
-      - name: Push tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag ${{ steps.ver.outputs.version }}
-          git push origin ${{ steps.ver.outputs.version }}
-
   build:
-    needs: tag
+    needs: version
     if: github.event_name == 'push'
     strategy:
       fail-fast: false
@@ -102,7 +93,7 @@ jobs:
         run: |
           $env:GOARCH = "amd64"
           go build `
-            -ldflags "-s -w -H windowsgui -X main.Version=${{ needs.tag.outputs.version }}" `
+            -ldflags "-s -w -H windowsgui -X main.Version=${{ needs.version.outputs.version }}" `
             -o ".build/${{ matrix.name }}.exe" .
 
       - name: Install Linux deps
@@ -115,7 +106,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           GOARCH=amd64 go build \
-            -ldflags "-s -w -X main.Version=${{ needs.tag.outputs.version }}" \
+            -ldflags "-s -w -X main.Version=${{ needs.version.outputs.version }}" \
             -o .build/${{ matrix.name }} .
 
       - name: Upload artifact
@@ -128,8 +119,8 @@ jobs:
             .build/${{ matrix.name }}
           if-no-files-found: ignore
 
-  pre-release:
-    needs: [tag, build]
+  release:
+    needs: [version, build]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
@@ -140,18 +131,19 @@ jobs:
         with:
           merge-multiple: true
 
-      - name: Create pre-release
+      - name: Create tag and release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.tag.outputs.version }}
-          name: ${{ needs.tag.outputs.version }}
-          prerelease: true
+          tag_name: ${{ needs.version.outputs.version }}
+          name: ${{ needs.version.outputs.version }}
+          prerelease: false
+          make_latest: true
           files: |
             *.zip
             *.exe
             compiler-linux-amd64
 
-  release:
+  promote:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     permissions:

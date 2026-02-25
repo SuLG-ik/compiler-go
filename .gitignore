@@ -2,6 +2,9 @@
 compiler
 compiler.exe
 
+# Build output
+.build/
+
 # Generated
 bundled.go
 

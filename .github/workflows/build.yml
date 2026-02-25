@@ -70,26 +70,31 @@ jobs:
         run: go install fyne.io/tools/cmd/fyne@latest
 
       - name: Generate bundled.go
-        run: fyne bundle -o bundled.go -name resourceIcon assets/Icon.png
+        run: fyne bundle -o bundled.go assets/Icon.png
+
+      - name: Prepare build dir
+        run: mkdir -p .build
 
       - name: Build macOS universal
         if: runner.os == 'macOS'
         run: |
+          APP_VER=$(cat VERSION | tr -d '[:space:]')
+
           GOARCH=amd64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            --app-version ${{ needs.tag.outputs.version }}
-          mv Compiler.app Compiler_amd64.app
+            --app-id ru.sulgik.Compiler --app-version $APP_VER
+          mv Compiler.app .build/Compiler_amd64.app
 
           GOARCH=arm64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            --app-version ${{ needs.tag.outputs.version }}
-          mv Compiler.app Compiler_arm64.app
+            --app-id ru.sulgik.Compiler --app-version $APP_VER
+          mv Compiler.app .build/Compiler_arm64.app
 
-          cp -r Compiler_amd64.app Compiler.app
+          cp -r .build/Compiler_amd64.app .build/Compiler.app
           lipo -create \
-            "Compiler_amd64.app/Contents/MacOS/Compiler" \
-            "Compiler_arm64.app/Contents/MacOS/Compiler" \
-            -output "Compiler.app/Contents/MacOS/Compiler"
+            ".build/Compiler_amd64.app/Contents/MacOS/Compiler" \
+            ".build/Compiler_arm64.app/Contents/MacOS/Compiler" \
+            -output ".build/Compiler.app/Contents/MacOS/Compiler"
 
-          zip -r ${{ matrix.name }}.zip Compiler.app
+          cd .build && zip -r ${{ matrix.name }}.zip Compiler.app
 
       - name: Build Windows
         if: runner.os == 'Windows'
@@ -98,8 +103,7 @@ jobs:
           $env:GOARCH = "amd64"
           go build `
             -ldflags "-s -w -H windowsgui -X main.Version=${{ needs.tag.outputs.version }}" `
-            -o compiler.exe .
-          Compress-Archive -Path compiler.exe -DestinationPath "${{ matrix.name }}.zip"
+            -o ".build/${{ matrix.name }}.exe" .
 
       - name: Install Linux deps
         if: runner.os == 'Linux'
@@ -112,16 +116,16 @@ jobs:
         run: |
           GOARCH=amd64 go build \
             -ldflags "-s -w -X main.Version=${{ needs.tag.outputs.version }}" \
-            -o compiler .
-          tar czf ${{ matrix.name }}.tar.gz compiler
+            -o .build/${{ matrix.name }} .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
           path: |
-            ${{ matrix.name }}.zip
-            ${{ matrix.name }}.tar.gz
+            .build/${{ matrix.name }}.zip
+            .build/${{ matrix.name }}.exe
+            .build/${{ matrix.name }}
           if-no-files-found: ignore
 
   pre-release:
@@ -144,7 +148,8 @@ jobs:
           prerelease: true
           files: |
             *.zip
-            *.tar.gz
+            *.exe
+            compiler-linux-amd64
 
   release:
     if: github.event_name == 'workflow_dispatch'

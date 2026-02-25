@@ -172,29 +172,21 @@ jobs:
             .build/${{ matrix.name }}
           if-no-files-found: ignore
 
-  release:
+  tag:
     needs: [version, build]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          merge-multiple: true
+      - uses: actions/checkout@v4
 
-      - name: Create tag and release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ needs.version.outputs.version }}
-          name: ${{ needs.version.outputs.version }}
-          prerelease: false
-          make_latest: true
-          files: |
-            *.zip
-            *.exe
-            compiler-linux-amd64
+      - name: Push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ needs.version.outputs.version }}
+          git push origin ${{ needs.version.outputs.version }}
 
   promote:
     if: github.event_name == 'workflow_dispatch'

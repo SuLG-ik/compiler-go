@@ -17,6 +17,10 @@ on:
         type: boolean
         default: false
 
+env:
+  # Necessary for most environments as build failure can occur due to OOM issues
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
 jobs:
 
   version:
@@ -42,6 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
@@ -50,12 +55,12 @@ jobs:
       - name: Install Linux deps
         run: |
           sudo apt-get update -q
-          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
-
-      - name: Generate bundled.go
-        run: |
-          go install fyne.io/tools/cmd/fyne@latest
-          fyne bundle -o bundled.go assets/Icon.png
+          DISTRO=$(lsb_release -rs)
+          if [[ "$DISTRO" == "24.04" ]]; then
+            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.1-dev
+          else
+            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.0-dev
+          fi
 
       - name: go vet
         run: go vet ./...
@@ -71,6 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
@@ -79,12 +85,12 @@ jobs:
       - name: Install Linux deps
         run: |
           sudo apt-get update -q
-          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
-
-      - name: Generate bundled.go
-        run: |
-          go install fyne.io/tools/cmd/fyne@latest
-          fyne bundle -o bundled.go assets/Icon.png
+          DISTRO=$(lsb_release -rs)
+          if [[ "$DISTRO" == "24.04" ]]; then
+            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.1-dev
+          else
+            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.0-dev
+          fi
 
       - name: Tests
         run: go test ./...
@@ -93,83 +99,41 @@ jobs:
     needs: [version, lint, test]
     if: github.event_name == 'push'
     strategy:
+      # Failure in one platform build won't impact the others
       fail-fast: false
       matrix:
-        include:
-          - os: macos-latest
-            name: compiler-darwin-universal
-          - os: windows-latest
-            name: compiler-windows-amd64
-          - os: ubuntu-latest
-            name: compiler-linux-amd64
-    runs-on: ${{ matrix.os }}
+        build:
+          - name: 'compiler'
+            platform: 'linux/amd64'
+            os: 'ubuntu-latest'
+          - name: 'compiler'
+            platform: 'windows/amd64'
+            os: 'windows-latest'
+          - name: 'compiler'
+            platform: 'darwin/universal'
+            os: 'macos-latest'
+    runs-on: ${{ matrix.build.os }}
+    env:
+      GOFLAGS: "-ldflags=-X main.Version=${{ needs.version.outputs.version }}"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+
+      - name: Build wails
+        uses: dAppServer/wails-build-action@v2.2
+        id: build
         with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Install fyne CLI
-        run: go install fyne.io/tools/cmd/fyne@latest
-
-      - name: Generate bundled.go
-        run: fyne bundle -o bundled.go assets/Icon.png
-
-      - name: Prepare build dir
-        run: mkdir -p .build
-
-      - name: Build macOS universal
-        if: runner.os == 'macOS'
-        run: |
-          APP_VER=$(cat VERSION | tr -d '[:space:]')
-
-          GOARCH=amd64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            --app-id ru.sulgik.Compiler --app-version $APP_VER
-          mv Compiler.app .build/Compiler_amd64.app
-
-          GOARCH=arm64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
-            --app-id ru.sulgik.Compiler --app-version $APP_VER
-          mv Compiler.app .build/Compiler_arm64.app
-
-          cp -r .build/Compiler_amd64.app .build/Compiler.app
-          lipo -create \
-            ".build/Compiler_amd64.app/Contents/MacOS/Compiler" \
-            ".build/Compiler_arm64.app/Contents/MacOS/Compiler" \
-            -output ".build/Compiler.app/Contents/MacOS/Compiler"
-
-          cd .build && zip -r ${{ matrix.name }}.zip Compiler.app
-
-      - name: Build Windows
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $env:GOARCH = "amd64"
-          go build `
-            -ldflags "-s -w -H windowsgui -X main.Version=${{ needs.version.outputs.version }}" `
-            -o ".build/${{ matrix.name }}.exe" .
-
-      - name: Install Linux deps
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update -q
-          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
-
-      - name: Build Linux
-        if: runner.os == 'Linux'
-        run: |
-          GOARCH=amd64 go build \
-            -ldflags "-s -w -X main.Version=${{ needs.version.outputs.version }}" \
-            -o .build/${{ matrix.name }} .
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          package: false
+          go-version: '1.23'
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.name }}
+          name: compiler-${{ matrix.build.os }}
           path: |
-            .build/${{ matrix.name }}.zip
-            .build/${{ matrix.name }}.exe
-            .build/${{ matrix.name }}
+            */bin/
+            *\bin\*
           if-no-files-found: ignore
 
   pre-release:
@@ -190,10 +154,7 @@ jobs:
           tag_name: ${{ needs.version.outputs.version }}
           name: ${{ needs.version.outputs.version }}
           prerelease: true
-          files: |
-            *.zip
-            *.exe
-            compiler-linux-amd64
+          files: build/bin/*
 
   promote:
     if: github.event_name == 'workflow_dispatch'

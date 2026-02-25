@@ -1,0 +1,54 @@
+.help-content {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.help-content h2 {
+  font-size: 16px;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+}
+
+.help-content h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 16px 0 6px;
+  color: #007acc;
+}
+
+.help-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+}
+
+.help-content th {
+  background: var(--bg-toolbar);
+  font-weight: 600;
+  text-align: left;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.help-content td {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+  font-size: 12px;
+}
+
+.help-content tr:nth-child(even) td {
+  background: var(--bg-output);
+}
+
+.help-content ul {
+  padding-left: 20px;
+  margin-top: 6px;
+}
+
+.help-content li {
+  margin-bottom: 5px;
+  font-size: 12px;
+}

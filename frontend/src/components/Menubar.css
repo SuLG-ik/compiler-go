@@ -1,0 +1,82 @@
+.menubar {
+  display: flex;
+  align-items: stretch;
+  height: var(--menubar-height);
+  background: var(--bg-menu);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  z-index: 100;
+  --webkit-app-region: no-drag;
+}
+
+.menubar__item {
+  position: relative;
+}
+
+.menubar__btn {
+  height: 100%;
+  padding: 0 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.menubar__btn:hover,
+.menubar__btn--open {
+  background: var(--bg-menu-hover);
+}
+
+.menubar__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--bg-modal);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  list-style: none;
+  padding: 4px 0;
+  z-index: 200;
+}
+
+.menubar__entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 5px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  color: var(--text-primary);
+  text-align: left;
+  gap: 24px;
+}
+
+.menubar__entry:hover {
+  background: #0078d4;
+  color: #fff;
+}
+
+.menubar__shortcut {
+  color: var(--text-secondary);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.menubar__entry:hover .menubar__shortcut {
+  color: rgba(255,255,255,0.8);
+}
+
+.menubar__sep {
+  height: 1px;
+  background: var(--border);
+  margin: 3px 0;
+}

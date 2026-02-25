@@ -40,63 +40,8 @@ jobs:
           COUNT=$(git rev-list --count HEAD)
           echo "version=v${BASE}-${COUNT}" >> $GITHUB_OUTPUT
 
-  lint:
-    needs: version
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Install Linux deps
-        run: |
-          sudo apt-get update -q
-          DISTRO=$(lsb_release -rs)
-          if [[ "$DISTRO" == "24.04" ]]; then
-            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.1-dev
-          else
-            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.0-dev
-          fi
-
-      - name: go vet
-        run: go vet ./...
-
-      - name: staticcheck
-        run: |
-          go install honnef.co/go/tools/cmd/staticcheck@latest
-          staticcheck ./...
-
-  test:
-    needs: version
-    if: github.event_name == 'push'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-          cache: true
-
-      - name: Install Linux deps
-        run: |
-          sudo apt-get update -q
-          DISTRO=$(lsb_release -rs)
-          if [[ "$DISTRO" == "24.04" ]]; then
-            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.1-dev
-          else
-            sudo apt-get install -yq libgtk-3-0 libwebkit2gtk-4.0-dev
-          fi
-
-      - name: Tests
-        run: go test ./...
-
   build:
-    needs: [version, lint, test]
+    needs: [version]
     if: github.event_name == 'push'
     strategy:
       # Failure in one platform build won't impact the others

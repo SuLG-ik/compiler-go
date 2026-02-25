@@ -9,6 +9,6 @@ import (
 func main() {
 	a := app.New()
 	a.SetIcon(resourceIconPng)
-	w := ui.NewCompilerWindow(a)
+	w := ui.NewCompilerWindow(a, Version)
 	w.ShowAndRun()
 }

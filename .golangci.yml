@@ -1,0 +1,20 @@
+linters:
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - gofmt
+    - ineffassign
+
+linters-settings:
+  gofmt:
+    simplify: true
+
+issues:
+  exclude-rules:
+    # bundled.go генерируется автоматически
+    - path: bundled\.go
+      linters: [all]
+    # fyne_metadata_init.go генерируется fyne package
+    - path: fyne_metadata_init\.go
+      linters: [all]

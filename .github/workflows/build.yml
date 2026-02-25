@@ -36,8 +36,61 @@ jobs:
           COUNT=$(git rev-list --count HEAD)
           echo "version=v${BASE}-${COUNT}" >> $GITHUB_OUTPUT
 
-  build:
+  lint:
     needs: version
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install Linux deps
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
+
+      - name: Generate bundled.go
+        run: |
+          go install fyne.io/tools/cmd/fyne@latest
+          fyne bundle -o bundled.go assets/Icon.png
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+
+  test:
+    needs: version
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Install Linux deps
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
+
+      - name: Generate bundled.go
+        run: |
+          go install fyne.io/tools/cmd/fyne@latest
+          fyne bundle -o bundled.go assets/Icon.png
+
+      - name: Tests
+        run: go test ./...
+
+  build:
+    needs: [version, lint, test]
     if: github.event_name == 'push'
     strategy:
       fail-fast: false

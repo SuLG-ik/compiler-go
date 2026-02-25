@@ -71,18 +71,21 @@ jobs:
       # ── macOS: fat binary через lipo + fyne package ──────────────────────
       - name: Install fyne CLI
         if: runner.os == 'macOS'
-        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+        run: go install fyne.io/tools/cmd/fyne@latest
+
+      - name: Generate bundled.go (macOS)
+        if: runner.os == 'macOS'
+        run: fyne bundle -o bundled.go -name resourceIcon assets/Icon.png
 
       - name: Build macOS universal
         if: runner.os == 'macOS'
-        env:
-          VERSION: ${{ needs.tag.outputs.version }}
-          LDFLAGS: -s -w -X main.Version=${{ needs.tag.outputs.version }}
         run: |
-          GOARCH=amd64 fyne package -os darwin -name Compiler
+          GOARCH=amd64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
+            -appversion ${{ needs.tag.outputs.version }}
           mv Compiler.app Compiler_amd64.app
 
-          GOARCH=arm64 fyne package -os darwin -name Compiler
+          GOARCH=arm64 fyne package -os darwin -name Compiler -icon assets/Icon.png \
+            -appversion ${{ needs.tag.outputs.version }}
           mv Compiler.app Compiler_arm64.app
 
           cp -r Compiler_amd64.app Compiler.app
@@ -94,6 +97,10 @@ jobs:
           zip -r ${{ matrix.name }}.zip Compiler.app
 
       # ── Windows ──────────────────────────────────────────────────────────
+      - name: Generate bundled.go (Windows)
+        if: runner.os == 'Windows'
+        run: go run fyne.io/tools/cmd/fyne@latest bundle -o bundled.go -name resourceIcon assets/Icon.png
+
       - name: Build Windows
         if: runner.os == 'Windows'
         shell: pwsh
@@ -110,6 +117,10 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
+
+      - name: Generate bundled.go (Linux)
+        if: runner.os == 'Linux'
+        run: go run fyne.io/tools/cmd/fyne@latest bundle -o bundled.go -name resourceIcon assets/Icon.png
 
       - name: Build Linux
         if: runner.os == 'Linux'

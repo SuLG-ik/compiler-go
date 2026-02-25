@@ -1,0 +1,168 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to promote to full release (e.g. v0.1.0-42)'
+        required: true
+      notes:
+        description: 'Release notes (markdown)'
+        required: false
+        default: ''
+      prerelease:
+        description: 'Keep as pre-release'
+        type: boolean
+        default: false
+
+jobs:
+
+  # ── 1. Вычисляет и создаёт git-тег ────────────────────────────────────────
+  tag:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute version
+        id: ver
+        run: |
+          BASE=$(cat VERSION | tr -d '[:space:]')
+          COUNT=$(git rev-list --count HEAD)
+          echo "version=v${BASE}-${COUNT}" >> $GITHUB_OUTPUT
+
+      - name: Push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.ver.outputs.version }}
+          git push origin ${{ steps.ver.outputs.version }}
+
+  # ── 2. Сборка на нативных раннерах (CGO требует нативного компилятора) ───
+  build:
+    needs: tag
+    if: github.event_name == 'push'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            name: compiler-darwin-universal
+          - os: windows-latest
+            name: compiler-windows-amd64
+          - os: ubuntu-latest
+            name: compiler-linux-amd64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      # ── macOS: fat binary через lipo + fyne package ──────────────────────
+      - name: Install fyne CLI
+        if: runner.os == 'macOS'
+        run: go install fyne.io/fyne/v2/cmd/fyne@latest
+
+      - name: Build macOS universal
+        if: runner.os == 'macOS'
+        env:
+          VERSION: ${{ needs.tag.outputs.version }}
+          LDFLAGS: -s -w -X main.Version=${{ needs.tag.outputs.version }}
+        run: |
+          GOARCH=amd64 fyne package -os darwin -name Compiler
+          mv Compiler.app Compiler_amd64.app
+
+          GOARCH=arm64 fyne package -os darwin -name Compiler
+          mv Compiler.app Compiler_arm64.app
+
+          cp -r Compiler_amd64.app Compiler.app
+          lipo -create \
+            "Compiler_amd64.app/Contents/MacOS/Compiler" \
+            "Compiler_arm64.app/Contents/MacOS/Compiler" \
+            -output "Compiler.app/Contents/MacOS/Compiler"
+
+          zip -r ${{ matrix.name }}.zip Compiler.app
+
+      # ── Windows ──────────────────────────────────────────────────────────
+      - name: Build Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $env:GOARCH = "amd64"
+          go build `
+            -ldflags "-s -w -H windowsgui -X main.Version=${{ needs.tag.outputs.version }}" `
+            -o compiler.exe .
+          Compress-Archive -Path compiler.exe -DestinationPath "${{ matrix.name }}.zip"
+
+      # ── Linux ─────────────────────────────────────────────────────────────
+      - name: Install Linux deps
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -yq gcc libgl1-mesa-dev xorg-dev
+
+      - name: Build Linux
+        if: runner.os == 'Linux'
+        run: |
+          GOARCH=amd64 go build \
+            -ldflags "-s -w -X main.Version=${{ needs.tag.outputs.version }}" \
+            -o compiler .
+          tar czf ${{ matrix.name }}.tar.gz compiler
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: |
+            ${{ matrix.name }}.zip
+            ${{ matrix.name }}.tar.gz
+          if-no-files-found: ignore
+
+  # ── 3. Создаёт pre-release и прикрепляет артефакты ───────────────────────
+  pre-release:
+    needs: [tag, build]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Create pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.tag.outputs.version }}
+          name: ${{ needs.tag.outputs.version }}
+          prerelease: true
+          files: |
+            *.zip
+            *.tar.gz
+
+  # ── 4. Ручное создание финального релиза из существующего тега ───────────
+  release:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Promote to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: ${{ inputs.tag }}
+          body: ${{ inputs.notes }}
+          prerelease: ${{ inputs.prerelease }}
+          fail_on_unmatched_files: false

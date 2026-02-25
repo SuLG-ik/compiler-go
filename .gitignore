@@ -1,0 +1,16 @@
+# Binaries
+compiler
+compiler.exe
+
+# Go build cache
+*.test
+
+# macOS
+.DS_Store
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# VS Code
+.vscode/

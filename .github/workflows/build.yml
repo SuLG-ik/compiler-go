@@ -52,14 +52,17 @@ jobs:
             platform: 'linux/amd64'
             os: 'ubuntu-latest'
             tags: 'webkit2_41'
+            output: 'compiler-linux-amd64'
           - name: 'compiler'
             platform: 'windows/amd64'
             os: 'windows-latest'
             tags: ''
+            output: 'compiler-windows-amd64'
           - name: 'compiler'
             platform: 'darwin/universal'
             os: 'macos-latest'
             tags: ''
+            output: 'compiler-darwin-universal'
     runs-on: ${{ matrix.build.os }}
     steps:
       - uses: actions/checkout@v4
@@ -94,22 +97,22 @@ jobs:
         run: >
           wails build
           --platform ${{ matrix.build.platform }}
-          -o ${{ matrix.build.name }}
+          -o ${{ matrix.build.output }}
           -ldflags "-X main.Version=${{ needs.version.outputs.version }}"
           ${{ matrix.build.tags != '' && format('-tags {0}', matrix.build.tags) || '' }}
 
       - name: Zip macOS app
         if: runner.os == 'macOS'
-        run: ditto -c -k --keepParent build/bin/compiler.app build/bin/compiler-darwin-universal.zip
+        run: ditto -c -k --keepParent build/bin/${{ matrix.build.output }}.app build/bin/${{ matrix.build.output }}.zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: compiler-${{ matrix.build.os }}
+          name: ${{ matrix.build.output }}
           path: |
-            build/bin/compiler-darwin-universal.zip
-            build/bin/compiler.exe
-            build/bin/compiler
+            build/bin/${{ matrix.build.output }}.zip
+            build/bin/${{ matrix.build.output }}.exe
+            build/bin/${{ matrix.build.output }}
           if-no-files-found: ignore
 
   pre-release:
@@ -131,8 +134,8 @@ jobs:
           name: ${{ needs.version.outputs.version }}
           prerelease: true
           files: |
-            compiler
-            compiler.exe
+            compiler-linux-amd64
+            compiler-windows-amd64.exe
             compiler-darwin-universal.zip
 
   promote:

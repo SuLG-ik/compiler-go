@@ -33,7 +33,7 @@
   outline: none;
   padding: 10px 14px;
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: var(--editor-font-size, 14px);
   line-height: 1.6;
   background: var(--bg-editor);
   color: var(--text-primary);
@@ -50,6 +50,22 @@
 
 .code-editor__textarea::placeholder {
   color: var(--text-placeholder);
+}
+
+.code-editor__cm {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  background: var(--bg-editor);
+}
+
+.code-editor__cm .cm-editor {
+  height: 100%;
+  outline: none;
+}
+
+.code-editor__cm .cm-editor.cm-focused {
+  outline: none;
 }
 
 .code-editor__divider {

@@ -1,60 +1,57 @@
 import './Toolbar.css'
+import { useTranslation } from '../i18n/I18nContext'
+import { type CommandRegistry, type CommandId, cmd, meta } from '../commands'
 
 interface ToolbarProps {
-  onNew: () => void
-  onOpen: () => void
-  onSave: () => void
-  onUndo: () => void
-  onRedo: () => void
-  onCopy: () => void
-  onCut: () => void
-  onPaste: () => void
-  onRun: () => void
-  onHelp: () => void
-  onAbout: () => void
+  commands: CommandRegistry
 }
 
-interface ToolBtn {
-  title: string
-  icon: string
-  action: () => void
-  separator?: boolean
-}
+type ToolbarItem =
+  | { separator: true }
+  | { id: CommandId; titleSuffix?: string }
 
-export function Toolbar(props: ToolbarProps) {
-  const buttons: ToolBtn[] = [
-    { title: 'Создать (Ctrl+N)', icon: '📄', action: props.onNew },
-    { title: 'Открыть (Ctrl+O)', icon: '📂', action: props.onOpen },
-    { title: 'Сохранить (Ctrl+S)', icon: '💾', action: props.onSave },
-    { separator: true, title: '', icon: '', action: () => {} },
-    { title: 'Отменить (Ctrl+Z)', icon: '↩', action: props.onUndo },
-    { title: 'Повторить (Ctrl+Y)', icon: '↪', action: props.onRedo },
-    { title: 'Копировать (Ctrl+C)', icon: '⧉', action: props.onCopy },
-    { title: 'Вырезать (Ctrl+X)', icon: '✂', action: props.onCut },
-    { title: 'Вставить (Ctrl+V)', icon: '📋', action: props.onPaste },
-    { separator: true, title: '', icon: '', action: () => {} },
-    { title: 'Пуск (Ctrl+R)', icon: '▶', action: props.onRun },
-    { separator: true, title: '', icon: '', action: () => {} },
-    { title: 'Справка (F1)', icon: '❓', action: props.onHelp },
-    { title: 'О программе', icon: 'ℹ', action: props.onAbout },
-  ]
+const TOOLBAR_ITEMS: ToolbarItem[] = [
+  { id: 'new' },
+  { id: 'open' },
+  { id: 'save' },
+  { separator: true },
+  { id: 'undo' },
+  { id: 'redo' },
+  { id: 'copy' },
+  { id: 'cut' },
+  { id: 'paste' },
+  { separator: true },
+  { id: 'run' },
+  { separator: true },
+  { id: 'fontSizeDown' },
+  { id: 'fontSizeUp' },
+  { separator: true },
+  { id: 'help' },
+  { id: 'about' },
+]
 
+export function Toolbar({ commands }: ToolbarProps) {
+  const { t } = useTranslation()
   return (
     <div className="toolbar">
-      {buttons.map((btn, i) =>
-        btn.separator ? (
-          <div key={i} className="toolbar__sep" />
-        ) : (
+      {TOOLBAR_ITEMS.map((item, i) => {
+        if ('separator' in item) {
+          return <div key={i} className="toolbar__sep" />
+        }
+        const m = meta(item.id)
+        const label = t('cmd.' + item.id)
+        const title = m.shortcut ? `${label} (${m.shortcut})` : label
+        return (
           <button
-            key={i}
+            key={item.id}
             className="toolbar__btn"
-            title={btn.title}
-            onClick={btn.action}
+            title={title}
+            onClick={cmd(commands, item.id)}
           >
-            {btn.icon}
+            {m.icon}
           </button>
         )
-      )}
+      })}
     </div>
   )
 }

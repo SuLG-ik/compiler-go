@@ -1,32 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
+import { useTranslation } from '../i18n/I18nContext'
 import './Menubar.css'
+import { type CommandRegistry, cmd, meta } from '../commands'
 
 interface MenubarProps {
-  onNew: () => void
-  onOpen: () => void
-  onSave: () => void
-  onSaveAs: () => void
-  onExit: () => void
-  onUndo: () => void
-  onRedo: () => void
-  onCut: () => void
-  onCopy: () => void
-  onPaste: () => void
-  onDelete: () => void
-  onSelectAll: () => void
-  onTask: () => void
-  onGrammar: () => void
-  onClass: () => void
-  onMethod: () => void
-  onTestEx: () => void
-  onRefs: () => void
-  onSrcCode: () => void
-  onRun: () => void
-  onHelp: () => void
-  onAbout: () => void
+  commands: CommandRegistry
 }
 
 interface MenuItem {
+  id?: string
   label: string
   shortcut?: string
   action?: () => void
@@ -38,9 +20,10 @@ interface MenuDef {
   items: MenuItem[]
 }
 
-export function Menubar(props: MenubarProps) {
+export function Menubar({ commands }: MenubarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null)
   const ref = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     function onClick(e: MouseEvent) {
@@ -52,77 +35,79 @@ export function Menubar(props: MenubarProps) {
     return () => document.removeEventListener('mousedown', onClick)
   }, [])
 
-  function exec(fn: () => void) {
+  function exec(id: Parameters<typeof cmd>[1]) {
     setOpenMenu(null)
-    fn()
+    cmd(commands, id)()
+  }
+
+  function item(id: Parameters<typeof cmd>[1], overrideLabel?: string): MenuItem {
+    const m = meta(id)
+    return { id, label: overrideLabel ?? t('cmd.' + id), shortcut: m.shortcut, action: () => exec(id) }
   }
 
   const menus: MenuDef[] = [
     {
-      label: 'Файл',
+      label: t('menu.file'),
       items: [
-        { label: 'Создать', shortcut: 'Ctrl+N', action: () => exec(props.onNew) },
-        { label: 'Открыть', shortcut: 'Ctrl+O', action: () => exec(props.onOpen) },
-        { label: 'Сохранить', shortcut: 'Ctrl+S', action: () => exec(props.onSave) },
-        { label: 'Сохранить как', shortcut: 'Ctrl+Shift+S', action: () => exec(props.onSaveAs) },
+        item('new'),
+        item('open'),
+        item('save'),
+        item('saveAs'),
         { separator: true, label: '' },
-        { label: 'Выход', action: () => exec(props.onExit) },
+        item('exit'),
       ],
     },
     {
-      label: 'Правка',
+      label: t('menu.edit'),
       items: [
-        { label: 'Отменить', shortcut: 'Ctrl+Z', action: () => exec(props.onUndo) },
-        { label: 'Повторить', shortcut: 'Ctrl+Y', action: () => exec(props.onRedo) },
+        item('undo'),
+        item('redo'),
         { separator: true, label: '' },
-        { label: 'Вырезать', shortcut: 'Ctrl+X', action: () => exec(props.onCut) },
-        { label: 'Копировать', shortcut: 'Ctrl+C', action: () => exec(props.onCopy) },
-        { label: 'Вставить', shortcut: 'Ctrl+V', action: () => exec(props.onPaste) },
-        { label: 'Удалить', action: () => exec(props.onDelete) },
+        item('cut'),
+        item('copy'),
+        item('paste'),
+        item('delete'),
         { separator: true, label: '' },
-        { label: 'Выделить все', shortcut: 'Ctrl+A', action: () => exec(props.onSelectAll) },
+        item('selectAll'),
       ],
     },
     {
-      label: 'Текст',
+      label: t('menu.text'),
       items: [
-        { label: 'Постановка задачи', action: () => exec(props.onTask) },
-        { label: 'Грамматика', action: () => exec(props.onGrammar) },
-        { label: 'Классификация грамматики', action: () => exec(props.onClass) },
-        { label: 'Метод анализа', action: () => exec(props.onMethod) },
-        { label: 'Тестовый пример', action: () => exec(props.onTestEx) },
-        { label: 'Список литературы', action: () => exec(props.onRefs) },
-        { label: 'Исходный код программы', action: () => exec(props.onSrcCode) },
+        item('task'),
+        item('grammar'),
+        item('class'),
+        item('method'),
+        item('testex'),
+        item('refs'),
+        item('srccode'),
       ],
     },
     {
-      label: 'Пуск',
-      items: [
-        { label: 'Пуск', shortcut: 'Ctrl+R', action: () => exec(props.onRun) },
-      ],
+      label: t('menu.run'),
+      items: [item('run', t('cmd.run'))],
     },
     {
-      label: 'Справка',
-      items: [
-        { label: 'Вызов справки', shortcut: 'F1', action: () => exec(props.onHelp) },
-        { label: 'О программе', action: () => exec(props.onAbout) },
-      ],
+      label: t('menu.help'),
+      items: [item('help'), item('about')],
     },
   ]
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const ctrl = e.ctrlKey || e.metaKey
-      if (ctrl && e.key === 'n') { e.preventDefault(); props.onNew() }
-      if (ctrl && e.key === 'o') { e.preventDefault(); props.onOpen() }
-      if (ctrl && !e.shiftKey && e.key === 's') { e.preventDefault(); props.onSave() }
-      if (ctrl && e.shiftKey && e.key === 'S') { e.preventDefault(); props.onSaveAs() }
-      if (ctrl && e.key === 'r') { e.preventDefault(); props.onRun() }
-      if (e.key === 'F1') { e.preventDefault(); props.onHelp() }
+      if (ctrl && e.key === 'n') { e.preventDefault(); cmd(commands, 'new')() }
+      if (ctrl && e.key === 'o') { e.preventDefault(); cmd(commands, 'open')() }
+      if (ctrl && !e.shiftKey && e.key === 's') { e.preventDefault(); cmd(commands, 'save')() }
+      if (ctrl && e.shiftKey && e.key === 'S') { e.preventDefault(); cmd(commands, 'saveAs')() }
+      if (ctrl && e.key === 'r') { e.preventDefault(); cmd(commands, 'run')() }
+      if (ctrl && (e.key === '=' || e.key === '+')) { e.preventDefault(); cmd(commands, 'fontSizeUp')() }
+      if (ctrl && e.key === '-') { e.preventDefault(); cmd(commands, 'fontSizeDown')() }
+      if (e.key === 'F1') { e.preventDefault(); cmd(commands, 'help')() }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [props])
+  }, [commands])
 
   return (
     <nav className="menubar" ref={ref}>

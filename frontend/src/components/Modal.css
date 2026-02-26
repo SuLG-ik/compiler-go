@@ -62,7 +62,6 @@
   color: var(--text-primary);
 }
 
-/* ─── footer кнопки ──────────────── */
 .modal__footer {
   display: flex;
   justify-content: flex-end;

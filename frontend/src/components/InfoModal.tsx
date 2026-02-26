@@ -1,4 +1,5 @@
 import { Modal } from './Modal'
+import { useTranslation } from '../i18n/I18nContext'
 import type { ModalType } from '../App'
 
 interface InfoModalProps {
@@ -6,46 +7,17 @@ interface InfoModalProps {
   onClose: () => void
 }
 
-const INFO_DATA: Record<string, { title: string; body: string }> = {
-  task: {
-    title: 'Постановка задачи',
-    body: 'Раздел «Постановка задачи» будет реализован в следующей лабораторной работе.\n\nЗдесь будет описана цель работы, требования к языковому процессору и формальное описание решаемой задачи.',
-  },
-  grammar: {
-    title: 'Грамматика',
-    body: 'Раздел «Грамматика» будет реализован в следующей лабораторной работе.\n\nЗдесь будет представлена формальная грамматика в виде продукций (BNF / EBNF).',
-  },
-  class: {
-    title: 'Классификация грамматики',
-    body: 'Раздел «Классификация грамматики» будет реализован в следующей лабораторной работе.\n\nЗдесь будет описана принадлежность грамматики к одному из классов по Хомскому и обоснование этой классификации.',
-  },
-  method: {
-    title: 'Метод анализа',
-    body: 'Раздел «Метод анализа» будет реализован в следующей лабораторной работе.\n\nЗдесь будет описан алгоритм синтаксического анализа, применяемый в языковом процессоре.',
-  },
-  testex: {
-    title: 'Тестовый пример',
-    body: 'Раздел «Тестовый пример» будет реализован в следующей лабораторной работе.\n\nЗдесь будут размещены тестовые входные данные и ожидаемые результаты работы языкового процессора.',
-  },
-  refs: {
-    title: 'Список литературы',
-    body: 'Раздел «Список литературы» будет реализован в следующей лабораторной работе.\n\nЗдесь будут представлены библиографические ссылки на использованные источники.',
-  },
-  srccode: {
-    title: 'Исходный код программы',
-    body: 'Раздел «Исходный код программы» будет реализован в следующей лабораторной работе.\n\nЗдесь будет отображаться аннотированный исходный код языкового процессора.',
-  },
-}
-
 export function InfoModal({ type, onClose }: InfoModalProps) {
-  const data = INFO_DATA[type] ?? { title: type, body: '' }
+  const { t } = useTranslation()
+  const title = t('info.' + type + '.title')
 
   return (
-    <Modal title={data.title} onClose={onClose} width={540}>
-      <p style={{ whiteSpace: 'pre-wrap', lineHeight: 1.65 }}>{data.body}</p>
+    <Modal title={title} onClose={onClose} width={540}>
+      <p style={{ whiteSpace: 'pre-wrap', lineHeight: 1.65 }}>TODO</p>
       <div className="modal__footer" style={{ padding: '16px 0 0', border: 'none' }}>
-        <button className="btn btn--primary" onClick={onClose}>Закрыть</button>
+        <button className="btn btn--primary" onClick={onClose}>{t('modal.close')}</button>
       </div>
     </Modal>
   )
 }
+

@@ -103,7 +103,16 @@ jobs:
 
       - name: Zip macOS app
         if: runner.os == 'macOS'
-        run: ditto -c -k --keepParent build/bin/${{ matrix.build.output }}.app build/bin/${{ matrix.build.output }}.zip
+        run: ditto -c -k --keepParent build/bin/compiler.app build/bin/${{ matrix.build.output }}.zip
+
+      - name: Ensure .exe extension on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $src = "build\bin\${{ matrix.build.output }}"
+          if (Test-Path "$src") {
+            Rename-Item "$src" "$src.exe"
+          }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4

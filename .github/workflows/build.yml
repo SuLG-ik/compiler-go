@@ -98,11 +98,18 @@ jobs:
           -ldflags "-X main.Version=${{ needs.version.outputs.version }}"
           ${{ matrix.build.tags != '' && format('-tags {0}', matrix.build.tags) || '' }}
 
+      - name: Zip macOS app
+        if: runner.os == 'macOS'
+        run: ditto -c -k --keepParent build/bin/compiler.app build/bin/compiler-darwin-universal.zip
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: compiler-${{ matrix.build.os }}
-          path: build/bin/
+          path: |
+            build/bin/compiler-darwin-universal.zip
+            build/bin/compiler.exe
+            build/bin/compiler
           if-no-files-found: ignore
 
   pre-release:
@@ -123,7 +130,10 @@ jobs:
           tag_name: ${{ needs.version.outputs.version }}
           name: ${{ needs.version.outputs.version }}
           prerelease: true
-          files: "**"
+          files: |
+            compiler
+            compiler.exe
+            compiler-darwin-universal.zip
 
   promote:
     if: github.event_name == 'workflow_dispatch'

@@ -111,7 +111,7 @@ jobs:
         run: |
           $src = "build\bin\${{ matrix.build.output }}"
           if (Test-Path "$src") {
-            Rename-Item "$src" "$src.exe"
+            Rename-Item "$src" "${{ matrix.build.output }}.exe"
           }
 
       - name: Upload artifact

@@ -6,35 +6,36 @@ import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
 import { customLang } from '../lang/customLang'
 import { useTranslation } from '../i18n/I18nContext'
 import { OutputTabs } from './OutputTabs'
+import { docStore } from '../stores/docStore'
 import type { AnalyzerError } from '../hooks/useEditorState'
 import './CodeEditor.css'
 
 interface CodeEditorProps {
-  code: string
   tabId: number
+  tabRevision: number
   output: string
   outputKey: string
   errors: AnalyzerError[]
   fontSize: number
   editorRef: MutableRefObject<EditorView | null>
-  onChange: (val: string) => void
+  onDirty: () => void
   onCursorChange: (pos: { row: number; col: number }) => void
 }
 
-export function CodeEditor({ code, tabId, output, outputKey, errors, fontSize, editorRef, onChange, onCursorChange }: CodeEditorProps) {
+export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
   const [splitRatio, setSplitRatio] = useState(0.72)
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
   const { t } = useTranslation()
   const placeholderCompartment = useRef(new Compartment())
-  const onChangeRef = useRef(onChange)
+  const onDirtyRef = useRef(onDirty)
   const onCursorChangeRef = useRef(onCursorChange)
-  useEffect(() => { onChangeRef.current = onChange }, [onChange])
+  useEffect(() => { onDirtyRef.current = onDirty }, [onDirty])
   useEffect(() => { onCursorChangeRef.current = onCursorChange }, [onCursorChange])
-  const tabStatesRef = useRef<Map<number, EditorState>>(new Map())
   const prevTabIdRef = useRef<number>(tabId)
   const extensionsRef = useRef<Extension[] | null>(null)
+  const suppressRef = useRef(false)
 
   function buildExtensions() {
     return [
@@ -47,10 +48,10 @@ export function CodeEditor({ code, tabId, output, outputKey, errors, fontSize, e
       keymap.of([...defaultKeymap, ...historyKeymap]),
       placeholderCompartment.current.of(placeholder(t('editor.placeholder'))),
       EditorView.updateListener.of(update => {
-        if (update.docChanged) {
-          onChangeRef.current(update.state.doc.toString())
+        if (update.docChanged && !suppressRef.current) {
+          onDirtyRef.current()
         }
-        if (update.docChanged || update.selectionSet) {
+        if ((update.docChanged || update.selectionSet) && !suppressRef.current) {
           const pos = update.state.selection.main.head
           const line = update.state.doc.lineAt(pos)
           onCursorChangeRef.current({ row: line.number, col: pos - line.from + 1 })
@@ -89,16 +90,23 @@ export function CodeEditor({ code, tabId, output, outputKey, errors, fontSize, e
     ]
     extensionsRef.current = extensions
 
+    const initialContent = docStore.getPending(tabId) ?? ''
+
     const view = new EditorView({
       state: EditorState.create({
-        doc: code,
+        doc: initialContent,
         extensions,
       }),
       parent: mountRef.current,
     })
 
     editorRef.current = view
+    docStore.save(tabId, view.state)
+
     return () => {
+      if (editorRef.current) {
+        docStore.save(prevTabIdRef.current, editorRef.current.state)
+      }
       view.destroy()
       editorRef.current = null
     }
@@ -115,34 +123,43 @@ export function CodeEditor({ code, tabId, output, outputKey, errors, fontSize, e
   useEffect(() => {
     const view = editorRef.current
     if (!view) return
-    if (view.state.doc.toString() === code) return
-    view.setState(EditorState.create({
-      doc: code,
-      extensions: extensionsRef.current ?? [],
-    }))
-  }, [code])
-
-  useEffect(() => {
-    const view = editorRef.current
-    if (!view) return
 
     const prevId = prevTabIdRef.current
-    if (prevId === tabId) return
 
-    tabStatesRef.current.set(prevId, view.state)
+    if (prevId !== tabId) {
+      docStore.save(prevId, view.state)
 
-    const saved = tabStatesRef.current.get(tabId)
-    if (saved) {
-      view.setState(saved)
+      suppressRef.current = true
+      const saved = docStore.restore(tabId)
+      if (saved) {
+        view.setState(saved)
+      } else {
+        const content = docStore.getPending(tabId) ?? ''
+        view.setState(EditorState.create({
+          doc: content,
+          extensions: extensionsRef.current ?? [],
+        }))
+      }
+      docStore.save(tabId, view.state)
+      suppressRef.current = false
+      prevTabIdRef.current = tabId
+
+      const pos = view.state.selection.main.head
+      const line = view.state.doc.lineAt(pos)
+      onCursorChangeRef.current({ row: line.number, col: pos - line.from + 1 })
     } else {
-      view.setState(EditorState.create({
-        doc: code,
-        extensions: extensionsRef.current ?? [],
-      }))
+      const pending = docStore.getPending(tabId)
+      if (pending !== undefined) {
+        suppressRef.current = true
+        view.setState(EditorState.create({
+          doc: pending,
+          extensions: extensionsRef.current ?? [],
+        }))
+        docStore.save(tabId, view.state)
+        suppressRef.current = false
+      }
     }
-
-    prevTabIdRef.current = tabId
-  }, [tabId])
+  }, [tabId, tabRevision])
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault()

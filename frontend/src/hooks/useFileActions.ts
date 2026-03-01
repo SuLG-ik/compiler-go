@@ -8,6 +8,7 @@ import {
   SaveFileAs,
   RunAnalyzer,
 } from '../../wailsjs/go/main/App'
+import { docStore } from '../stores/docStore'
 import { basename, type EditorState } from './useEditorState'
 
 export interface UnsavedPrompt {
@@ -22,9 +23,13 @@ export function useFileActions(
   const [unsaved, setUnsaved] = useState<UnsavedPrompt | null>(null)
   const handleSaveRef = useRef<(done?: () => void) => void>(() => {})
 
-  const { code, currentFile, dirty,
+  const { currentFile, dirty,
     setOutput, setOutputKey, setErrors, setCurrentFile, setDirty, setStatus,
-    tabs, activeTabId, addTab, removeTab, switchTab, updateTab, getTab } = state
+    tabs, activeTabId, addTab, removeTab, switchTab, updateTab, getTab, loadTabContent } = state
+
+  function getActiveCode(): string {
+    return editorRef.current?.state.doc.toString() ?? ''
+  }
 
   function handleNew() {
     addTab()
@@ -45,10 +50,12 @@ export function useFileActions(
         return
       }
 
-      if (!currentFile && !dirty && !code) {
-        updateTab(activeTabId, { code: result.content, path: result.path, dirty: false })
+      if (!currentFile && !dirty && !getActiveCode()) {
+        updateTab(activeTabId, { path: result.path, dirty: false })
+        loadTabContent(activeTabId, result.content)
       } else {
-        addTab({ code: result.content, path: result.path, dirty: false })
+        const id = addTab({ path: result.path, dirty: false })
+        docStore.setPending(id, result.content)
       }
       setOutput('')
       setOutputKey('')
@@ -59,7 +66,7 @@ export function useFileActions(
 
   function handleSave(done?: () => void) {
     if (!currentFile) { handleSaveAs(done); return }
-    SaveFile(currentFile, code).then(() => {
+    SaveFile(currentFile, getActiveCode()).then(() => {
       setDirty(false)
       setStatus({ key: 'status.saved', params: { name: basename(currentFile) } })
       done?.()
@@ -68,7 +75,7 @@ export function useFileActions(
   handleSaveRef.current = handleSave
 
   function handleSaveAs(done?: () => void) {
-    SaveFileAs(currentFile, code).then(path => {
+    SaveFileAs(currentFile, getActiveCode()).then(path => {
       if (!path) return
       setCurrentFile(path)
       setDirty(false)
@@ -114,10 +121,12 @@ export function useFileActions(
         return
       }
 
-      if (!currentFile && !dirty && !code) {
-        updateTab(activeTabId, { code: result.content, path: result.path, dirty: false })
+      if (!currentFile && !dirty && !getActiveCode()) {
+        updateTab(activeTabId, { path: result.path, dirty: false })
+        loadTabContent(activeTabId, result.content)
       } else {
-        addTab({ code: result.content, path: result.path, dirty: false })
+        const id = addTab({ path: result.path, dirty: false })
+        docStore.setPending(id, result.content)
       }
       setOutput('')
       setOutputKey('')
@@ -166,8 +175,9 @@ export function useFileActions(
   }
 
   function handleRun() {
+    const activeCode = getActiveCode()
     setStatus({ key: 'status.analyzing' })
-    RunAnalyzer(code).then(result => {
+    RunAnalyzer(activeCode).then(result => {
       setOutputKey(result.outputKey ?? '')
       setOutput(result.outputKey ? '' : (result.output ?? ''))
       setErrors(result.errors ?? [])

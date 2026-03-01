@@ -82,14 +82,14 @@ export default function App() {
         onClose={actions.handleCloseTab}
       />
       <CodeEditor
-        code={state.code}
         tabId={state.activeTabId}
+        tabRevision={state.tabRevision}
         output={state.output}
         outputKey={state.outputKey}
         errors={state.errors}
         fontSize={state.fontSize}
         editorRef={editorRef}
-        onChange={state.handleCodeChange}
+        onDirty={state.handleCodeChange}
         onCursorChange={state.setCursorPos}
       />
       <StatusBar status={state.status} row={state.cursorPos.row} col={state.cursorPos.col} />

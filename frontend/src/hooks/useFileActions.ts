@@ -151,11 +151,8 @@ export function useFileActions(
   }
   function handlePaste() {
     const view = editorRef.current; if (!view) return
-    navigator.clipboard.readText().then(text => {
-      const { from, to } = view.state.selection.main
-      view.dispatch({ changes: { from, to, insert: text } })
-      view.focus()
-    })
+    view.contentDOM.focus()
+    document.execCommand('paste')
   }
   function handleDelete() {
     const view = editorRef.current; if (!view) return

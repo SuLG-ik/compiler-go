@@ -20,14 +20,12 @@ const TOOLBAR_ITEMS: ToolbarItem[] = [
   { id: 'copy' },
   { id: 'cut' },
   { id: 'paste' },
-  { separator: true },
   { id: 'run' },
+  { id: 'help' },
+  { id: 'about' },
   { separator: true },
   { id: 'fontSizeDown' },
   { id: 'fontSizeUp' },
-  { separator: true },
-  { id: 'help' },
-  { id: 'about' },
 ]
 
 export function Toolbar({ commands }: ToolbarProps) {

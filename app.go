@@ -9,7 +9,7 @@ type App struct {
 }
 
 func NewApp() *App {
-	return &App{}
+	return new(App)
 }
 
 func (a *App) startup(ctx context.Context) {

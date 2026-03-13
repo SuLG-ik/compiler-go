@@ -86,6 +86,19 @@
   background: rgba(0, 122, 204, 0.06);
 }
 
+.error-table__row--clickable {
+  cursor: pointer;
+}
+
+.error-table__row--clickable:active td {
+  background: rgba(0, 122, 204, 0.15);
+}
+
+.error-table__lexeme {
+  font-family: var(--font-mono);
+  white-space: pre;
+}
+
 .error-table__empty {
   padding: 24px;
   text-align: center;

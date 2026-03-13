@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { EditorView } from '@codemirror/view'
-import { OnFileDrop, OnFileDropOff } from '../wailsjs/runtime/runtime'
+import { OnFileDrop, OnFileDropOff, EventsOn, EventsOff } from '../wailsjs/runtime/runtime'
 import { Menubar } from './components/Menubar'
 import { Toolbar } from './components/Toolbar'
 import { EditorTabs } from './components/EditorTabs'
@@ -38,6 +38,14 @@ export default function App() {
       if (paths.length > 0) fileDropRef.current(paths[0])
     }, true)
     return () => { OnFileDropOff() }
+  }, [])
+
+  const handleExitRef = useRef(actions.handleExit)
+  useEffect(() => { handleExitRef.current = actions.handleExit })
+  useEffect(() => {
+    const handler = () => handleExitRef.current()
+    EventsOn('app:beforeclose', handler)
+    return () => { EventsOff('app:beforeclose') }
   }, [])
 
   const commands = {
@@ -87,6 +95,7 @@ export default function App() {
         output={state.output}
         outputKey={state.outputKey}
         errors={state.errors}
+        tokens={state.tokens}
         fontSize={state.fontSize}
         editorRef={editorRef}
         onDirty={state.handleCodeChange}

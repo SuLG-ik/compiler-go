@@ -7,7 +7,7 @@ import { customLang } from '../lang/customLang'
 import { useTranslation } from '../i18n/I18nContext'
 import { OutputTabs } from './OutputTabs'
 import { docStore } from '../stores/docStore'
-import type { AnalyzerError } from '../hooks/useEditorState'
+import type { AnalyzerError, Token } from '../hooks/useEditorState'
 import './CodeEditor.css'
 
 interface CodeEditorProps {
@@ -16,13 +16,14 @@ interface CodeEditorProps {
   output: string
   outputKey: string
   errors: AnalyzerError[]
+  tokens: Token[]
   fontSize: number
   editorRef: MutableRefObject<EditorView | null>
   onDirty: () => void
   onCursorChange: (pos: { row: number; col: number }) => void
 }
 
-export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
+export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, tokens, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
   const [splitRatio, setSplitRatio] = useState(0.72)
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
@@ -192,7 +193,23 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, font
         title={t('divider.title')}
       />
       <div className="code-editor__pane code-editor__pane--output" style={{ flex: 1 - splitRatio }}>
-        <OutputTabs output={output} outputKey={outputKey} errors={errors} />
+        <OutputTabs
+          output={output}
+          outputKey={outputKey}
+          errors={errors}
+          tokens={tokens}
+          onNavigate={(line, col) => {
+            const view = editorRef.current
+            if (!view) return
+            const lineInfo = view.state.doc.line(Math.min(line, view.state.doc.lines))
+            const pos = Math.min(lineInfo.from + col - 1, lineInfo.to)
+            view.dispatch({
+              selection: { anchor: pos },
+              scrollIntoView: true,
+            })
+            view.focus()
+          }}
+        />
       </div>
     </div>
   )

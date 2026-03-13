@@ -1,79 +1,86 @@
-import { StreamLanguage, LanguageSupport } from '@codemirror/language'
+import { HighlightStyle, LanguageSupport, StreamLanguage, syntaxHighlighting } from '@codemirror/language'
+import { tags } from '@lezer/highlight'
 
-const KEYWORDS = new Set<string>([
-  'if', 'else', 'while', 'for', 'return', 'var', 'func'
-])
+const KEYWORDS = new Set<string>(['fun', 'return'])
+const TYPES = new Set<string>(['Int', 'Boolean', 'Float', 'Double'])
 
 interface ParserState {
-  inBlockComment: boolean
+  expectFunctionName: boolean
 }
 
+const kotlinSubsetHighlight = HighlightStyle.define([
+  { tag: tags.keyword, color: '#005fb8', fontWeight: '600' },
+  { tag: tags.typeName, color: '#267f99', fontWeight: '600' },
+  { tag: tags.definition(tags.variableName), color: '#795e26', fontWeight: '700' },
+  { tag: tags.variableName, color: 'var(--text-primary)' },
+  { tag: tags.number, color: '#098658' },
+  { tag: tags.operator, color: '#b00020' },
+  { tag: [tags.punctuation, tags.bracket], color: '#444444' },
+  { tag: tags.invalid, color: '#d32f2f', textDecoration: 'underline wavy' },
+])
+
 const customLanguage = StreamLanguage.define<ParserState>({
-  name: 'custom',
+  name: 'kotlin-subset',
 
   startState(): ParserState {
-    return { inBlockComment: false }
+    return { expectFunctionName: false }
   },
 
   token(stream, state): string | null {
-    if (state.inBlockComment) {
-      if (stream.match('*/')) {
-        state.inBlockComment = false
-      } else {
-        stream.next()
-      }
-      return 'comment'
-    }
-
     if (stream.eatSpace()) return null
 
-    if (stream.match('//')) {
-      stream.skipToEnd()
-      return 'lineComment'
-    }
-
-    if (stream.match('/*')) {
-      state.inBlockComment = true
-      return 'comment'
-    }
-
-    if (stream.match('"')) {
-      while (!stream.eol()) {
-        const ch = stream.next()
-        if (ch === '\\') { stream.next(); continue }
-        if (ch === '"') break
-      }
-      return 'string'
-    }
-
-    if (stream.match("'")) {
-      while (!stream.eol()) {
-        const ch = stream.next()
-        if (ch === '\\') { stream.next(); continue }
-        if (ch === "'") break
-      }
-      return 'string'
-    }
-
-    if (stream.match(/^[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?/)) {
+    if (stream.match(/^[0-9]+\.[0-9]+/)) {
+      state.expectFunctionName = false
       return 'number'
     }
 
-    if (stream.match(/^[A-Za-z_][A-Za-z0-9_]*/)) {
+    if (stream.match(/^[0-9]+/)) {
+      state.expectFunctionName = false
+      return 'number'
+    }
+
+    if (stream.match(/^[A-Za-z]+/)) {
       const word = stream.current()
-      if (KEYWORDS.has(word)) return 'keyword'
+
+      if (KEYWORDS.has(word)) {
+        state.expectFunctionName = word === 'fun'
+        return 'keyword'
+      }
+
+      if (TYPES.has(word)) {
+        state.expectFunctionName = false
+        return 'type'
+      }
+
+      if (state.expectFunctionName) {
+        state.expectFunctionName = false
+        return 'def'
+      }
+
       return 'variableName'
     }
 
-    if (stream.match(/^[+\-*/%=<>!&|^~?:;,.()\[\]{}]/)) {
+    if (stream.match(/^[+\-*/]/)) {
+      state.expectFunctionName = false
       return 'operator'
     }
 
+    if (stream.match(/^[,:;]/)) {
+      state.expectFunctionName = false
+      return 'punctuation'
+    }
+
+    if (stream.match(/^[(){}]/)) {
+      state.expectFunctionName = false
+      return 'bracket'
+    }
+
     stream.next()
-    return null
+    state.expectFunctionName = false
+    return 'invalid'
   },
 })
 
 export function customLang(): LanguageSupport {
-  return new LanguageSupport(customLanguage)
+  return new LanguageSupport(customLanguage, [syntaxHighlighting(kotlinSubsetHighlight)])
 }

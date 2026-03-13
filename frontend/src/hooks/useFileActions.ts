@@ -7,6 +7,7 @@ import {
   SaveFile,
   SaveFileAs,
   RunAnalyzer,
+  AllowQuit,
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
 import { basename, type EditorState } from './useEditorState'
@@ -24,7 +25,7 @@ export function useFileActions(
   const handleSaveRef = useRef<(done?: () => void) => void>(() => {})
 
   const { currentFile, dirty,
-    setOutput, setOutputKey, setErrors, setCurrentFile, setDirty, setStatus,
+    setOutput, setOutputKey, setErrors, setTokens, setCurrentFile, setDirty, setStatus,
     tabs, activeTabId, addTab, removeTab, switchTab, updateTab, getTab, loadTabContent } = state
 
   function getActiveCode(): string {
@@ -36,6 +37,7 @@ export function useFileActions(
     setOutput('')
     setOutputKey('')
     setErrors([])
+    setTokens([])
     setStatus({ key: 'status.newDoc' })
   }
 
@@ -60,6 +62,7 @@ export function useFileActions(
       setOutput('')
       setOutputKey('')
       setErrors([])
+      setTokens([])
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
     }).catch(err => setStatus({ key: 'status.errorOpen', params: { err: String(err) } }))
   }
@@ -84,18 +87,46 @@ export function useFileActions(
     }).catch(err => setStatus({ key: 'status.errorSave', params: { err: String(err) } }))
   }
 
-  function handleExit() {
-    const anyDirty = tabs.some(t => t.dirty)
-    if (!anyDirty) { quit(); return }
+  async function handleExit() {
+    const dirtyTabs = tabs.filter(t => t.dirty)
+    if (!dirtyTabs.length) { quit(); return }
+
+    const namedDirty = dirtyTabs.filter(t => t.path !== '')
+    const untitledDirty = dirtyTabs.filter(t => t.path === '')
+
+    const saveAllNamed = async (): Promise<boolean> => {
+      for (const tab of namedDirty) {
+        const code = tab.id === activeTabId ? getActiveCode() : docStore.getCode(tab.id)
+        try {
+          await SaveFile(tab.path, code)
+          updateTab(tab.id, { dirty: false })
+        } catch (err) {
+          setStatus({ key: 'status.errorSave', params: { err: String(err) } })
+          return false
+        }
+      }
+      return true
+    }
+
+    if (untitledDirty.length === 0) {
+      if (await saveAllNamed()) quit()
+      return
+    }
+
     setUnsaved({
-      onSave:    () => { setUnsaved(null); handleSaveRef.current(() => quit()) },
-      onDiscard: () => { setUnsaved(null); quit() },
+      onSave: async () => {
+        setUnsaved(null)
+        if (await saveAllNamed()) handleSaveRef.current(() => quit())
+      },
+      onDiscard: async () => {
+        setUnsaved(null)
+        if (await saveAllNamed()) quit()
+      },
     })
   }
 
   function quit() {
-    const rt = (window as any)['runtime']
-    if (rt?.Quit) rt.Quit()
+    AllowQuit()
   }
 
   function handleCloseTab(id: number) {
@@ -131,6 +162,7 @@ export function useFileActions(
       setOutput('')
       setOutputKey('')
       setErrors([])
+      setTokens([])
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
     }).catch(err => setStatus({ key: 'status.errorOpen', params: { err: String(err) } }))
   }
@@ -181,11 +213,13 @@ export function useFileActions(
       setOutputKey(result.outputKey ?? '')
       setOutput(result.outputKey ? '' : (result.output ?? ''))
       setErrors(result.errors ?? [])
+      setTokens(result.tokens ?? [])
       setStatus({ key: 'status.analyzed' })
     }).catch(err => {
       setOutputKey('')
       setOutput(String(err))
       setErrors([])
+      setTokens([])
       setStatus({ key: 'status.errorAnalysis' })
     })
   }

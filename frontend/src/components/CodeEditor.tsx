@@ -7,7 +7,7 @@ import { customLang } from '../lang/customLang'
 import { useTranslation } from '../i18n/I18nContext'
 import { OutputTabs } from './OutputTabs'
 import { docStore } from '../stores/docStore'
-import type { AnalyzerError, Token } from '../hooks/useEditorState'
+import type { AnalyzerError } from '../hooks/useEditorState'
 import './CodeEditor.css'
 
 interface CodeEditorProps {
@@ -16,14 +16,13 @@ interface CodeEditorProps {
   output: string
   outputKey: string
   errors: AnalyzerError[]
-  tokens: Token[]
   fontSize: number
   editorRef: MutableRefObject<EditorView | null>
   onDirty: () => void
   onCursorChange: (pos: { row: number; col: number }) => void
 }
 
-export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, tokens, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
+export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
   const [splitRatio, setSplitRatio] = useState(0.72)
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
@@ -197,7 +196,6 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, toke
           output={output}
           outputKey={outputKey}
           errors={errors}
-          tokens={tokens}
           onNavigate={(line, col) => {
             const view = editorRef.current
             if (!view) return

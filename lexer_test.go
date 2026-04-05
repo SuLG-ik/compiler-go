@@ -140,6 +140,35 @@ func TestTokenizeKeywords(t *testing.T) {
 	}
 }
 
+func TestTokenizeIdentifiersWithUnderscoresAndDigits(t *testing.T) {
+	input := "calc_1 _tmp2 return_value Int32"
+	result := Tokenize(input)
+	if len(result.Errors) != 0 {
+		t.Errorf("expected no errors, got %d", len(result.Errors))
+	}
+	expected := []struct {
+		code   int
+		lexeme string
+	}{
+		{CodeIdent, "calc_1"},
+		{CodeSpace, " "},
+		{CodeIdent, "_tmp2"},
+		{CodeSpace, " "},
+		{CodeIdent, "return_value"},
+		{CodeSpace, " "},
+		{CodeIdent, "Int32"},
+	}
+	if len(result.Tokens) != len(expected) {
+		t.Fatalf("expected %d tokens, got %d", len(expected), len(result.Tokens))
+	}
+	for i, exp := range expected {
+		tok := result.Tokens[i]
+		if tok.Code != exp.code || tok.Lexeme != exp.lexeme {
+			t.Errorf("token %d: expected code=%d lexeme=%q, got code=%d lexeme=%q", i, exp.code, exp.lexeme, tok.Code, tok.Lexeme)
+		}
+	}
+}
+
 func TestTokenizeEmpty(t *testing.T) {
 	result := Tokenize("")
 	if len(result.Tokens) != 0 {

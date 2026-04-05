@@ -17,7 +17,7 @@ const EDIT_ROWS: HelpRow[] = [
   { id: 'undo' }, { id: 'redo' }, { id: 'cut' }, { id: 'copy' },
   { id: 'paste' }, { id: 'delete' }, { id: 'selectAll' },
 ]
-const RUN_ROWS: HelpRow[]  = [{ id: 'run' }]
+const RUN_ROWS: HelpRow[]  = [{ id: 'run' }, { id: 'runAntlr' }]
 const HELP_ROWS: HelpRow[] = [{ id: 'help' }, { id: 'about' }]
 
 const UI_KEYS = ['editor', 'output', 'divider', 'statusbar'] as const

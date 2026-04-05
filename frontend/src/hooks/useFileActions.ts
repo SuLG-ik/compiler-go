@@ -7,6 +7,7 @@ import {
   SaveFile,
   SaveFileAs,
   RunAnalyzer,
+  RunAntlrAnalyzer,
   AllowQuit,
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
@@ -224,12 +225,30 @@ export function useFileActions(
     })
   }
 
+  function handleRunAntlr() {
+  const activeCode = getActiveCode()
+  setStatus({ key: 'status.analyzingAntlr' })
+  RunAntlrAnalyzer(activeCode).then(result => {
+    setOutputKey(result.outputKey ?? '')
+    setOutput(result.outputKey ? '' : (result.output ?? ''))
+    setErrors(result.errors ?? [])
+    setTokens(result.tokens ?? [])
+    setStatus({ key: 'status.analyzedAntlr' })
+  }).catch(err => {
+    setOutputKey('')
+    setOutput(String(err))
+    setErrors([])
+    setTokens([])
+    setStatus({ key: 'status.errorAnalysis' })
+  })
+  }
+
   return {
     unsaved, setUnsaved,
     handleNew, handleOpen, handleSave, handleSaveAs, handleExit,
     handleUndo, handleRedo, handleCut, handleCopy, handlePaste,
     handleDelete, handleSelectAll,
-    handleCloseTab, handleFileDrop, handleRun,
+    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr,
   }
 }
 

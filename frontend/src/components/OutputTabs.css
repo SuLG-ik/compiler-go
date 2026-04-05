@@ -105,3 +105,12 @@
   color: var(--text-secondary);
   font-size: 13px;
 }
+
+.error-table__summary {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-toolbar);
+  border-bottom: 1px solid var(--border);
+}

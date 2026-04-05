@@ -3,6 +3,7 @@ package main
 type AnalyzerError struct {
 	Line       int    `json:"line"`
 	Col        int    `json:"col"`
+	Fragment   string `json:"fragment,omitempty"`
 	Message    string `json:"message"`
 	MessageKey string `json:"messageKey,omitempty"`
 }
@@ -27,17 +28,44 @@ func (a *App) RunAnalyzer(content string) *AnalyzerResult {
 
 	result := Tokenize(content)
 
-	analyzerErrors := make([]AnalyzerError, 0, len(result.Errors))
+	analyzerErrors := make([]AnalyzerError, 0)
+
 	for _, e := range result.Errors {
 		analyzerErrors = append(analyzerErrors, AnalyzerError{
-			Line:    e.Line,
-			Col:     e.Col,
-			Message: e.Message,
+			Line:       e.Line,
+			Col:        e.Col,
+			Fragment:   e.Message,
+			MessageKey: "lexer.error.unexpectedChar",
 		})
 	}
 
+	if len(analyzerErrors) > 0 {
+		return &AnalyzerResult{
+			OutputKey: "analyzer.lexerFailed",
+			Tokens:    result.Tokens,
+			Errors:    analyzerErrors,
+		}
+	}
+
+	parser := NewParser(result.Tokens)
+	parserErrors := parser.Parse()
+	for _, e := range parserErrors {
+		analyzerErrors = append(analyzerErrors, AnalyzerError{
+			Line:       e.Line,
+			Col:        e.Col,
+			Fragment:   e.Fragment,
+			MessageKey: e.MessageKey,
+		})
+	}
+
+	outputKey := ""
+	if len(analyzerErrors) == 0 {
+		outputKey = "parser.success"
+	}
+
 	return &AnalyzerResult{
-		Tokens: result.Tokens,
-		Errors: analyzerErrors,
+		OutputKey: outputKey,
+		Tokens:    result.Tokens,
+		Errors:    analyzerErrors,
 	}
 }

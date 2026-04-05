@@ -14,6 +14,7 @@ export interface StatusMsg {
 export interface AnalyzerError {
   line: number
   col: number
+  fragment?: string
   message: string
   messageKey?: string
 }

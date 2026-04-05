@@ -39,7 +39,7 @@ const customLanguage = StreamLanguage.define<ParserState>({
       return 'number'
     }
 
-    if (stream.match(/^[A-Za-z]+/)) {
+    if (stream.match(/^[A-Za-z_][A-Za-z0-9_]*/)) {
       const word = stream.current()
 
       if (KEYWORDS.has(word)) {

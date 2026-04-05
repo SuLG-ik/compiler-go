@@ -80,6 +80,14 @@ func isLetter(ch byte) bool {
 	return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')
 }
 
+func isIdentifierStart(ch byte) bool {
+	return isLetter(ch) || ch == '_'
+}
+
+func isIdentifierPart(ch byte) bool {
+	return isIdentifierStart(ch) || isDigit(ch)
+}
+
 func isDigit(ch byte) bool {
 	return ch >= '0' && ch <= '9'
 }
@@ -129,7 +137,7 @@ func Tokenize(input string) *LexerResult {
 			startCol = col
 			lexemeStart = pos
 
-			if isLetter(ch) {
+			if isIdentifierStart(ch) {
 				state = stateIdent
 				pos++
 				col++
@@ -197,7 +205,7 @@ func Tokenize(input string) *LexerResult {
 			}
 
 		case stateIdent:
-			if !atEnd && isLetter(ch) {
+			if !atEnd && isIdentifierPart(ch) {
 				pos++
 				col++
 			} else {

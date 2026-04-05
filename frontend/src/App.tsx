@@ -69,6 +69,7 @@ export default function App() {
     refs:    () => setModal('refs'),
     srccode: () => setModal('srccode'),
     run:     actions.handleRun,
+    runAntlr: actions.handleRunAntlr,
     fontSizeUp: state.fontSizeUp,
     fontSizeDown: state.fontSizeDown,
     help:    () => setModal('help'),
@@ -95,7 +96,6 @@ export default function App() {
         output={state.output}
         outputKey={state.outputKey}
         errors={state.errors}
-        tokens={state.tokens}
         fontSize={state.fontSize}
         editorRef={editorRef}
         onDirty={state.handleCodeChange}

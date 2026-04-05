@@ -12,6 +12,7 @@ import {
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
 import { basename, type EditorState } from './useEditorState'
+import { searchRegexMatches, type RegexSearchTaskId } from '../regex/regexSearch'
 
 export interface UnsavedPrompt {
   onSave: () => void
@@ -26,7 +27,9 @@ export function useFileActions(
   const handleSaveRef = useRef<(done?: () => void) => void>(() => {})
 
   const { currentFile, dirty,
-    setOutput, setOutputKey, setErrors, setTokens, setCurrentFile, setDirty, setStatus,
+    setOutput, setOutputKey, setErrors, setTokens,
+    setRegexMatches, setSelectedRegexMatch, setRegexMessageKey, resetRegexSearch,
+    setCurrentFile, setDirty, setStatus,
     tabs, activeTabId, addTab, removeTab, switchTab, updateTab, getTab, loadTabContent } = state
 
   function getActiveCode(): string {
@@ -39,6 +42,7 @@ export function useFileActions(
     setOutputKey('')
     setErrors([])
     setTokens([])
+    resetRegexSearch()
     setStatus({ key: 'status.newDoc' })
   }
 
@@ -49,6 +53,7 @@ export function useFileActions(
       const existing = tabs.find(t => t.path === result.path && t.path !== '')
       if (existing) {
         switchTab(existing.id)
+        resetRegexSearch()
         setStatus({ key: 'status.switched', params: { name: basename(result.path) } })
         return
       }
@@ -64,6 +69,7 @@ export function useFileActions(
       setOutputKey('')
       setErrors([])
       setTokens([])
+      resetRegexSearch()
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
     }).catch(err => setStatus({ key: 'status.errorOpen', params: { err: String(err) } }))
   }
@@ -149,6 +155,7 @@ export function useFileActions(
       const existing = tabs.find(t => t.path === result.path && t.path !== '')
       if (existing) {
         switchTab(existing.id)
+        resetRegexSearch()
         setStatus({ key: 'status.switched', params: { name: basename(result.path) } })
         return
       }
@@ -164,6 +171,7 @@ export function useFileActions(
       setOutputKey('')
       setErrors([])
       setTokens([])
+      resetRegexSearch()
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
     }).catch(err => setStatus({ key: 'status.errorOpen', params: { err: String(err) } }))
   }
@@ -243,12 +251,32 @@ export function useFileActions(
   })
   }
 
+  function handleRunRegexSearch(taskId: RegexSearchTaskId) {
+    const activeCode = getActiveCode()
+
+    if (!activeCode.trim()) {
+      setRegexMatches([])
+      setSelectedRegexMatch(null)
+      setRegexMessageKey('regex.emptyMessage')
+      setStatus({ key: 'status.regexEmpty' })
+      return
+    }
+
+    setStatus({ key: 'status.regexSearching' })
+    const matches = searchRegexMatches(activeCode, taskId)
+
+    setRegexMatches(matches)
+    setSelectedRegexMatch(null)
+    setRegexMessageKey(matches.length === 0 ? 'regex.noMatches' : '')
+    setStatus({ key: 'status.regexDone', params: { count: String(matches.length) } })
+  }
+
   return {
     unsaved, setUnsaved,
     handleNew, handleOpen, handleSave, handleSaveAs, handleExit,
     handleUndo, handleRedo, handleCut, handleCopy, handlePaste,
     handleDelete, handleSelectAll,
-    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr,
+    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr, handleRunRegexSearch,
   }
 }
 

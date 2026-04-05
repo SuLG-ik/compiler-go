@@ -68,6 +68,11 @@
   outline: none;
 }
 
+.code-editor__cm .cm-regex-match {
+  background: rgba(255, 196, 0, 0.35);
+  border-radius: 2px;
+}
+
 .code-editor__divider {
   height: 5px;
   background: var(--border);

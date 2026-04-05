@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { GetVersion } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
+import type { RegexSearchMatch, RegexSearchTaskId } from '../regex/regexSearch'
 
 export function basename(path: string): string {
   return path.split('/').pop() || path.split('\\').pop() || path
@@ -53,6 +54,10 @@ export interface EditorState {
   outputKey: string
   errors: AnalyzerError[]
   tokens: Token[]
+  regexTaskId: RegexSearchTaskId
+  regexMatches: RegexSearchMatch[]
+  selectedRegexMatch: RegexSearchMatch | null
+  regexMessageKey: string
   status: StatusMsg
   cursorPos: { row: number; col: number }
   version: string
@@ -63,6 +68,11 @@ export interface EditorState {
   setOutputKey: (val: string) => void
   setErrors: (val: AnalyzerError[]) => void
   setTokens: (val: Token[]) => void
+  setRegexTaskId: (val: RegexSearchTaskId) => void
+  setRegexMatches: (val: RegexSearchMatch[]) => void
+  setSelectedRegexMatch: (val: RegexSearchMatch | null) => void
+  setRegexMessageKey: (val: string) => void
+  resetRegexSearch: (messageKey?: string) => void
   setStatus: (val: StatusMsg) => void
   setCursorPos: (pos: { row: number; col: number }) => void
   handleCodeChange: () => void
@@ -81,6 +91,10 @@ export function useEditorState(): EditorState {
   const [outputKey, setOutputKey] = useState('')
   const [errors, setErrors] = useState<AnalyzerError[]>([])
   const [tokens, setTokens] = useState<Token[]>([])
+  const [regexTaskId, setRegexTaskId] = useState<RegexSearchTaskId>('password')
+  const [regexMatches, setRegexMatches] = useState<RegexSearchMatch[]>([])
+  const [selectedRegexMatch, setSelectedRegexMatch] = useState<RegexSearchMatch | null>(null)
+  const [regexMessageKey, setRegexMessageKey] = useState('regex.idle')
   const [status, setStatus] = useState<StatusMsg>({ key: 'status.ready' })
   const [cursorPos, setCursorPos] = useState({ row: 1, col: 1 })
   const [version, setVersion] = useState('dev')
@@ -146,8 +160,15 @@ export function useEditorState(): EditorState {
     }
   }
 
+  function resetRegexSearch(messageKey = 'regex.idle') {
+    setRegexMatches([])
+    setSelectedRegexMatch(null)
+    setRegexMessageKey(messageKey)
+  }
+
   function handleCodeChange() {
     setTabs(prev => prev.map(t => t.id === activeTabId ? { ...t, dirty: true } : t))
+    setSelectedRegexMatch(null)
     setStatus({ key: 'status.modified' })
   }
 
@@ -155,9 +176,13 @@ export function useEditorState(): EditorState {
     currentFile, dirty,
     tabs, activeTabId, tabRevision,
     addTab, removeTab, switchTab, updateTab, isTabDirty, getTab, loadTabContent,
-    output, outputKey, errors, tokens, status, cursorPos, version, fontSize,
+    output, outputKey, errors, tokens,
+    regexTaskId, regexMatches, selectedRegexMatch, regexMessageKey,
+    status, cursorPos, version, fontSize,
     setCurrentFile, setDirty,
-    setOutput, setOutputKey, setErrors, setTokens, setStatus, setCursorPos,
+    setOutput, setOutputKey, setErrors, setTokens,
+    setRegexTaskId, setRegexMatches, setSelectedRegexMatch, setRegexMessageKey, resetRegexSearch,
+    setStatus, setCursorPos,
     handleCodeChange, fontSizeUp, fontSizeDown,
   }
 }

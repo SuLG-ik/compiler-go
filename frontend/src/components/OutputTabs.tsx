@@ -1,12 +1,20 @@
 import { useState } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
 import type { AnalyzerError } from '../hooks/useEditorState'
+import { REGEX_SEARCH_TASKS, type RegexSearchMatch, type RegexSearchTaskId } from '../regex/regexSearch'
 import './OutputTabs.css'
 
 interface OutputTabsProps {
   output: string
   outputKey: string
   errors: AnalyzerError[]
+  regexTaskId: RegexSearchTaskId
+  regexMatches: RegexSearchMatch[]
+  selectedRegexMatchId: number | null
+  regexMessageKey: string
+  onRegexTaskChange: (taskId: RegexSearchTaskId) => void
+  onRunRegexSearch: (taskId: RegexSearchTaskId) => void
+  onSelectRegexMatch: (match: RegexSearchMatch) => void
   onNavigate?: (line: number, col: number) => void
 }
 
@@ -22,8 +30,20 @@ function formatLocation(line: number, col: number): string {
   return `${line}:${col}`
 }
 
-export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabsProps) {
-  const [active, setActive] = useState<'output' | 'errors'>('output')
+export function OutputTabs({
+  output,
+  outputKey,
+  errors,
+  regexTaskId,
+  regexMatches,
+  selectedRegexMatchId,
+  regexMessageKey,
+  onRegexTaskChange,
+  onRunRegexSearch,
+  onSelectRegexMatch,
+  onNavigate,
+}: OutputTabsProps) {
+  const [active, setActive] = useState<'output' | 'errors' | 'search'>('output')
   const { t } = useTranslation()
 
   const displayOutput = outputKey ? t(outputKey) : output
@@ -42,6 +62,12 @@ export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabs
           onClick={() => setActive('errors')}
         >
           {t('output.errors')}
+        </button>
+        <button
+          className={`output-tabs__tab ${active === 'search' ? 'output-tabs__tab--active' : ''}`}
+          onClick={() => setActive('search')}
+        >
+          {t('output.search')}
         </button>
       </div>
 
@@ -88,6 +114,69 @@ export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabs
               </table>
             </div>
           )
+        )}
+
+        {active === 'search' && (
+          <div className="regex-search">
+            <div className="regex-search__controls">
+              <label className="regex-search__field">
+                <span className="regex-search__label">{t('regex.selectTask')}</span>
+                <select
+                  className="regex-search__select"
+                  value={regexTaskId}
+                  onChange={e => onRegexTaskChange(e.target.value as RegexSearchTaskId)}
+                >
+                  {REGEX_SEARCH_TASKS.map(task => (
+                    <option key={task.id} value={task.id}>
+                      {t(task.titleKey)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <button
+                className="regex-search__run"
+                onClick={() => onRunRegexSearch(regexTaskId)}
+              >
+                {t('regex.run')}
+              </button>
+            </div>
+
+            <div className="error-table__summary">
+              {t('regex.matchCount')}: {regexMatches.length}
+            </div>
+
+            {regexMessageKey ? (
+              <div className="error-table__empty">{t(regexMessageKey)}</div>
+            ) : regexMatches.length === 0 ? (
+              <div className="error-table__empty">{t('regex.noMatches')}</div>
+            ) : (
+              <div className="error-table-wrap">
+                <table className="error-table">
+                  <thead>
+                    <tr>
+                      <th>{t('output.colFragment')}</th>
+                      <th>{t('regex.colStart')}</th>
+                      <th>{t('regex.colLength')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {regexMatches.map(match => (
+                      <tr
+                        key={match.id}
+                        className={`error-table__row--clickable ${selectedRegexMatchId === match.id ? 'error-table__row--selected' : ''}`}
+                        onClick={() => onSelectRegexMatch(match)}
+                      >
+                        <td className="error-table__lexeme">{formatLexeme(match.value)}</td>
+                        <td>{formatLocation(match.line, match.col)}</td>
+                        <td>{match.length}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

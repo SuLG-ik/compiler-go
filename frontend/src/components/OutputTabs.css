@@ -94,6 +94,10 @@
   background: rgba(0, 122, 204, 0.15);
 }
 
+.error-table__row--selected td {
+  background: rgba(0, 122, 204, 0.12);
+}
+
 .error-table__lexeme {
   font-family: var(--font-mono);
   white-space: pre;
@@ -113,4 +117,61 @@
   color: var(--text-secondary);
   background: var(--bg-toolbar);
   border-bottom: 1px solid var(--border);
+}
+
+.regex-search {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.regex-search__controls {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-output);
+  flex-wrap: wrap;
+}
+
+.regex-search__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 280px;
+}
+
+.regex-search__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.regex-search__select,
+.regex-search__run {
+  min-height: 34px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font: inherit;
+}
+
+.regex-search__select {
+  background: var(--bg-editor);
+  color: var(--text-primary);
+  padding: 6px 10px;
+}
+
+.regex-search__run {
+  padding: 0 16px;
+  background: rgba(0, 122, 204, 0.12);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.regex-search__run:hover {
+  background: rgba(0, 122, 204, 0.18);
+  border-color: var(--border-focus);
 }

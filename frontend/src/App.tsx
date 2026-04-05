@@ -96,10 +96,17 @@ export default function App() {
         output={state.output}
         outputKey={state.outputKey}
         errors={state.errors}
+        regexTaskId={state.regexTaskId}
+        regexMatches={state.regexMatches}
+        selectedRegexMatch={state.selectedRegexMatch}
+        regexMessageKey={state.regexMessageKey}
         fontSize={state.fontSize}
         editorRef={editorRef}
         onDirty={state.handleCodeChange}
         onCursorChange={state.setCursorPos}
+        onRegexTaskChange={state.setRegexTaskId}
+        onRunRegexSearch={actions.handleRunRegexSearch}
+        onSelectRegexMatch={state.setSelectedRegexMatch}
       />
       <StatusBar status={state.status} row={state.cursorPos.row} col={state.cursorPos.col} />
 

@@ -1,5 +1,5 @@
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
-import { EditorView, keymap, lineNumbers, drawSelection, highlightActiveLine, placeholder } from '@codemirror/view'
+import { EditorView, Decoration, keymap, lineNumbers, drawSelection, highlightActiveLine, placeholder } from '@codemirror/view'
 import { EditorState, Extension, Compartment } from '@codemirror/state'
 import { defaultKeymap, historyKeymap, history } from '@codemirror/commands'
 import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
@@ -8,7 +8,25 @@ import { useTranslation } from '../i18n/I18nContext'
 import { OutputTabs } from './OutputTabs'
 import { docStore } from '../stores/docStore'
 import type { AnalyzerError } from '../hooks/useEditorState'
+import type { RegexSearchMatch, RegexSearchTaskId } from '../regex/regexSearch'
 import './CodeEditor.css'
+
+function buildSelectedMatchExtension(match: RegexSearchMatch | null): Extension {
+  if (!match) {
+    return EditorView.decorations.of(Decoration.none)
+  }
+
+  const selectedMark = Decoration.mark({ class: 'cm-regex-match' })
+  return EditorView.decorations.of(Decoration.set([selectedMark.range(match.from, match.to)]))
+}
+
+function isMatchAvailable(view: EditorView, match: RegexSearchMatch): boolean {
+  if (match.from < 0 || match.to > view.state.doc.length || match.from >= match.to) {
+    return false
+  }
+
+  return view.state.doc.sliceString(match.from, match.to) === match.value
+}
 
 interface CodeEditorProps {
   tabId: number
@@ -16,19 +34,44 @@ interface CodeEditorProps {
   output: string
   outputKey: string
   errors: AnalyzerError[]
+  regexTaskId: RegexSearchTaskId
+  regexMatches: RegexSearchMatch[]
+  selectedRegexMatch: RegexSearchMatch | null
+  regexMessageKey: string
   fontSize: number
   editorRef: MutableRefObject<EditorView | null>
   onDirty: () => void
   onCursorChange: (pos: { row: number; col: number }) => void
+  onRegexTaskChange: (taskId: RegexSearchTaskId) => void
+  onRunRegexSearch: (taskId: RegexSearchTaskId) => void
+  onSelectRegexMatch: (match: RegexSearchMatch | null) => void
 }
 
-export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
+export function CodeEditor({
+  tabId,
+  tabRevision,
+  output,
+  outputKey,
+  errors,
+  regexTaskId,
+  regexMatches,
+  selectedRegexMatch,
+  regexMessageKey,
+  fontSize,
+  editorRef,
+  onDirty,
+  onCursorChange,
+  onRegexTaskChange,
+  onRunRegexSearch,
+  onSelectRegexMatch,
+}: CodeEditorProps) {
   const [splitRatio, setSplitRatio] = useState(0.72)
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
   const dragging = useRef(false)
   const { t } = useTranslation()
   const placeholderCompartment = useRef(new Compartment())
+  const selectedMatchCompartment = useRef(new Compartment())
   const onDirtyRef = useRef(onDirty)
   const onCursorChangeRef = useRef(onCursorChange)
   useEffect(() => { onDirtyRef.current = onDirty }, [onDirty])
@@ -47,6 +90,7 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, font
       customLang(),
       keymap.of([...defaultKeymap, ...historyKeymap]),
       placeholderCompartment.current.of(placeholder(t('editor.placeholder'))),
+      selectedMatchCompartment.current.of(buildSelectedMatchExtension(null)),
       EditorView.updateListener.of(update => {
         if (update.docChanged && !suppressRef.current) {
           onDirtyRef.current()
@@ -124,6 +168,19 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, font
     const view = editorRef.current
     if (!view) return
 
+    const nextExtension = selectedRegexMatch && isMatchAvailable(view, selectedRegexMatch)
+      ? buildSelectedMatchExtension(selectedRegexMatch)
+      : buildSelectedMatchExtension(null)
+
+    view.dispatch({
+      effects: selectedMatchCompartment.current.reconfigure(nextExtension),
+    })
+  }, [selectedRegexMatch, tabId])
+
+  useEffect(() => {
+    const view = editorRef.current
+    if (!view) return
+
     const prevId = prevTabIdRef.current
 
     if (prevId !== tabId) {
@@ -196,6 +253,27 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, font
           output={output}
           outputKey={outputKey}
           errors={errors}
+          regexTaskId={regexTaskId}
+          regexMatches={regexMatches}
+          selectedRegexMatchId={selectedRegexMatch?.id ?? null}
+          regexMessageKey={regexMessageKey}
+          onRegexTaskChange={onRegexTaskChange}
+          onRunRegexSearch={onRunRegexSearch}
+          onSelectRegexMatch={match => {
+            const view = editorRef.current
+            if (!view) return
+            if (!isMatchAvailable(view, match)) {
+              onSelectRegexMatch(null)
+              return
+            }
+
+            onSelectRegexMatch(match)
+            view.dispatch({
+              selection: { anchor: match.from, head: match.to },
+              scrollIntoView: true,
+            })
+            view.focus()
+          }}
           onNavigate={(line, col) => {
             const view = editorRef.current
             if (!view) return

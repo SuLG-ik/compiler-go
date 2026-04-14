@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from '../i18n/I18nContext'
 import type { AnalyzerError } from '../hooks/useEditorState'
 import './OutputTabs.css'
@@ -27,6 +27,12 @@ export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabs
   const { t } = useTranslation()
 
   const displayOutput = outputKey ? t(outputKey) : output
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      setActive('errors')
+    }
+  }, [errors])
 
   return (
     <div className="output-tabs">

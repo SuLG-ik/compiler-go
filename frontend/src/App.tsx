@@ -69,7 +69,6 @@ export default function App() {
     refs:    () => setModal('refs'),
     srccode: () => setModal('srccode'),
     run:     actions.handleRun,
-    runAntlr: actions.handleRunAntlr,
     fontSizeUp: state.fontSizeUp,
     fontSizeDown: state.fontSizeDown,
     help:    () => setModal('help'),

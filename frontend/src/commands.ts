@@ -2,7 +2,7 @@ export type CommandId =
   | 'new' | 'open' | 'save' | 'saveAs' | 'exit'
   | 'undo' | 'redo' | 'cut' | 'copy' | 'paste' | 'delete' | 'selectAll'
   | 'task' | 'grammar' | 'class' | 'method' | 'testex' | 'refs' | 'srccode'
-  | 'run' | 'runAntlr'
+  | 'run'
   | 'fontSizeUp' | 'fontSizeDown'
   | 'help' | 'about'
 
@@ -34,7 +34,6 @@ export const COMMANDS: CommandMeta[] = [
   { id: 'refs',      label: 'Список литературы' },
   { id: 'srccode',   label: 'Исходный код программы' },
   { id: 'run',       label: 'Пуск',                   shortcut: 'Ctrl+R',       icon: '▶' },
-  { id: 'runAntlr',  label: 'ANTLR Пуск',             shortcut: 'Ctrl+Shift+R', icon: 'A▶' },
   { id: 'fontSizeUp',   label: 'Увеличить шрифт',       shortcut: 'Ctrl+=',       icon: 'A+' },
   { id: 'fontSizeDown', label: 'Уменьшить шрифт',       shortcut: 'Ctrl+−',       icon: 'A−' },
   { id: 'help',      label: 'Вызов справки',          shortcut: 'F1',           icon: '❓' },

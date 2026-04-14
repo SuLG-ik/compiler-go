@@ -85,7 +85,7 @@ export function Menubar({ commands }: MenubarProps) {
     },
     {
       label: t('menu.run'),
-      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr'))],
+      items: [item('run', t('cmd.run'))],
     },
     {
       label: t('menu.help'),
@@ -101,7 +101,6 @@ export function Menubar({ commands }: MenubarProps) {
       if (ctrl && !e.shiftKey && e.key === 's') { e.preventDefault(); cmd(commands, 'save')() }
       if (ctrl && e.shiftKey && e.key === 'S') { e.preventDefault(); cmd(commands, 'saveAs')() }
       if (ctrl && e.key === 'r') { e.preventDefault(); cmd(commands, 'run')() }
-      if (ctrl && e.shiftKey && e.key === 'R') { e.preventDefault(); cmd(commands, 'runAntlr')() }
       if (ctrl && (e.key === '=' || e.key === '+')) { e.preventDefault(); cmd(commands, 'fontSizeUp')() }
       if (ctrl && e.key === '-') { e.preventDefault(); cmd(commands, 'fontSizeDown')() }
       if (e.key === 'F1') { e.preventDefault(); cmd(commands, 'help')() }

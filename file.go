@@ -17,7 +17,7 @@ func (a *App) OpenFile() (*FileResult, error) {
 	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
 		Title: "Открыть файл",
 		Filters: []runtime.FileFilter{
-			{DisplayName: "Текстовые файлы (*.txt;*.go;*.c;*.cpp;*.h;*.pas;*.cs;*.py)", Pattern: "*.txt;*.go;*.c;*.cpp;*.h;*.pas;*.cs;*.py"},
+			{DisplayName: "Файлы Kotlin (*.kt)", Pattern: "*.kt"},
 			{DisplayName: "Все файлы (*.*)", Pattern: "*.*"},
 		},
 	})
@@ -61,7 +61,7 @@ func (a *App) SaveFile(path string, content string) error {
 }
 
 func (a *App) SaveFileAs(currentPath string, content string) (string, error) {
-	defaultName := "untitled.txt"
+	defaultName := "untitled.kt"
 	if currentPath != "" {
 		defaultName = filepath.Base(currentPath)
 	}
@@ -70,7 +70,7 @@ func (a *App) SaveFileAs(currentPath string, content string) (string, error) {
 		Title:           "Сохранить как",
 		DefaultFilename: defaultName,
 		Filters: []runtime.FileFilter{
-			{DisplayName: "Текстовые файлы (*.txt;*.go;*.c;*.cpp;*.h;*.pas)", Pattern: "*.txt;*.go;*.c;*.cpp;*.h;*.pas"},
+			{DisplayName: "Файлы Kotlin (*.kt)", Pattern: "*.kt"},
 			{DisplayName: "Все файлы (*.*)", Pattern: "*.*"},
 		},
 	})

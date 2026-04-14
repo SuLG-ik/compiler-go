@@ -60,6 +60,8 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--text-primary);
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .modal__footer {

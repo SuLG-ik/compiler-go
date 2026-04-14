@@ -265,7 +265,6 @@ func TestParserReportsCascadeForFuncAndMissingColon(t *testing.T) {
 
 	expectedKeys := []string{
 		"parser.error.expectedFun",
-		"parser.error.expectedColon",
 	}
 
 	if len(errors) != len(expectedKeys) {

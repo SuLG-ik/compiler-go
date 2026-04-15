@@ -14,8 +14,14 @@ type FileResult struct {
 }
 
 func (a *App) OpenFile() (*FileResult, error) {
+	defaultDir := ""
+	if exe, err := os.Executable(); err == nil {
+		defaultDir = filepath.Dir(exe)
+	}
+
 	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
-		Title: "Открыть файл",
+		Title:            "Открыть файл",
+		DefaultDirectory: defaultDir,
 		Filters: []runtime.FileFilter{
 			{DisplayName: "Файлы Kotlin (*.kt)", Pattern: "*.kt"},
 			{DisplayName: "Все файлы (*.*)", Pattern: "*.*"},

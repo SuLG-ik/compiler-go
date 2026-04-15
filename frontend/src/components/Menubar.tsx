@@ -85,7 +85,7 @@ export function Menubar({ commands }: MenubarProps) {
     },
     {
       label: t('menu.run'),
-      items: [item('run', t('cmd.run'))],
+      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr'))],
     },
     {
       label: t('menu.help'),
@@ -96,11 +96,12 @@ export function Menubar({ commands }: MenubarProps) {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       const ctrl = e.ctrlKey || e.metaKey
+      if (ctrl && e.shiftKey && e.key === 'R') { e.preventDefault(); cmd(commands, 'runAntlr')(); return }
       if (ctrl && e.key === 'n') { e.preventDefault(); cmd(commands, 'new')() }
       if (ctrl && e.key === 'o') { e.preventDefault(); cmd(commands, 'open')() }
       if (ctrl && !e.shiftKey && e.key === 's') { e.preventDefault(); cmd(commands, 'save')() }
       if (ctrl && e.shiftKey && e.key === 'S') { e.preventDefault(); cmd(commands, 'saveAs')() }
-      if (ctrl && e.key === 'r') { e.preventDefault(); cmd(commands, 'run')() }
+      if (ctrl && !e.shiftKey && e.key === 'r') { e.preventDefault(); cmd(commands, 'run')() }
       if (ctrl && (e.key === '=' || e.key === '+')) { e.preventDefault(); cmd(commands, 'fontSizeUp')() }
       if (ctrl && e.key === '-') { e.preventDefault(); cmd(commands, 'fontSizeDown')() }
       if (e.key === 'F1') { e.preventDefault(); cmd(commands, 'help')() }

@@ -138,12 +138,7 @@ func (p *Parser) Parse() []ParserError {
 }
 
 func (p *Parser) parseProgram() {
-	startPos := p.pos
 	p.parseFunDecl()
-
-	if p.pos == startPos {
-		return
-	}
 
 	if p.atEnd() {
 		p.addError("parser.error.expectedSemi")
@@ -160,7 +155,9 @@ func (p *Parser) parseFunDecl() {
 		p.advance()
 	} else {
 		p.addError("parser.error.expectedFun")
-		return
+		if p.peek() == CodeIdent && p.peekOffset(1) == CodeIdent {
+			p.advance()
+		}
 	}
 
 	p.expect(CodeIdent, "parser.error.expectedName",

@@ -7,7 +7,7 @@ import {
   SaveFile,
   SaveFileAs,
   RunAnalyzer,
-""  RunAntlrAnalyzer,
+  RunAntlrAnalyzer,
   AllowQuit,
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'

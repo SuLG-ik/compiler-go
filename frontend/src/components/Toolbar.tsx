@@ -22,6 +22,7 @@ const TOOLBAR_ITEMS: ToolbarItem[] = [
   { id: 'paste' },
   { id: 'run' },
   { id: 'runAntlr' },
+  { id: 'runSemantic' },
   { id: 'help' },
   { id: 'about' },
   { separator: true },

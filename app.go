@@ -21,17 +21,14 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// beforeClose вызывается при нажатии на крестик окна.
-// Возвращает true — предотвращает закрытие (фронтенд сам решит).
 func (a *App) beforeClose(ctx context.Context) bool {
 	if a.canQuit {
-		return false // разрешить закрытие
+		return false
 	}
 	runtime.EventsEmit(ctx, "app:beforeclose")
-	return true // заблокировать закрытие
+	return true
 }
 
-// AllowQuit вызывается из фронтенда, когда всё сохранено.
 func (a *App) AllowQuit() {
 	a.canQuit = true
 	runtime.Quit(a.ctx)

@@ -8,6 +8,7 @@ import {
   SaveFileAs,
   RunAnalyzer,
   RunAntlrAnalyzer,
+  RunSemanticAnalyzer,
   AllowQuit,
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
@@ -26,7 +27,7 @@ export function useFileActions(
   const handleSaveRef = useRef<(done?: () => void) => void>(() => {})
 
   const { currentFile, dirty,
-    setOutput, setOutputKey, setErrors, setTokens, setCurrentFile, setDirty, setStatus,
+    setOutput, setOutputKey, setOutputParams, setErrors, setTokens, setCurrentFile, setDirty, setStatus,
     tabs, activeTabId, addTab, removeTab, switchTab, updateTab, getTab, loadTabContent } = state
 
   function getActiveCode(): string {
@@ -212,12 +213,14 @@ export function useFileActions(
     setStatus({ key: 'status.analyzing' })
     RunAnalyzer(activeCode).then(result => {
       setOutputKey(result.outputKey ?? '')
+      setOutputParams({})
       setOutput(result.outputKey ? '' : (result.output ?? ''))
       setErrors(result.errors ?? [])
       setTokens(result.tokens ?? [])
       setStatus({ key: 'status.analyzed' })
     }).catch(err => {
       setOutputKey('')
+      setOutputParams({})
       setOutput(String(err))
       setErrors([])
       setTokens([])
@@ -230,6 +233,7 @@ export function useFileActions(
     setStatus({ key: 'status.analyzingAntlr' })
     RunAntlrAnalyzer(activeCode).then(result => {
       setOutputKey(result.outputKey ?? '')
+      setOutputParams({})
       setOutput(result.outputKey ? '' : (result.output ?? ''))
       setErrors(result.errors ?? [])
       setTokens(result.tokens ?? [])
@@ -243,13 +247,33 @@ export function useFileActions(
     })
   }
 
+  function handleRunSemantic() {
+    const activeCode = getActiveCode()
+    setStatus({ key: 'status.analyzingSemantic' })
+    RunSemanticAnalyzer(activeCode).then(result => {
+      setOutputKey(result.outputKey ?? '')
+      setOutputParams(result.outputParams ?? {})
+      setOutput(result.outputKey ? '' : (result.output ?? ''))
+      setErrors(result.errors ?? [])
+      setTokens(result.tokens ?? [])
+      setStatus({ key: 'status.analyzedSemantic' })
+    }).catch(err => {
+      setOutputKey('')
+      setOutputParams({})
+      setOutput(String(err))
+      setErrors([])
+      setTokens([])
+      setStatus({ key: 'status.errorAnalysis' })
+    })
+  }
+
 
   return {
     unsaved, setUnsaved,
     handleNew, handleOpen, handleSave, handleSaveAs, handleExit,
     handleUndo, handleRedo, handleCut, handleCopy, handlePaste,
     handleDelete, handleSelectAll,
-    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr,
+    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr, handleRunSemantic,
   }
 }
 

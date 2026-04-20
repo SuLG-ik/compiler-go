@@ -6,6 +6,7 @@ import './OutputTabs.css'
 interface OutputTabsProps {
   output: string
   outputKey: string
+  outputParams?: Record<string, string>
   errors: AnalyzerError[]
   onNavigate?: (line: number, col: number) => void
 }
@@ -22,11 +23,11 @@ function formatLocation(line: number, col: number): string {
   return `${line}:${col}`
 }
 
-export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabsProps) {
+export function OutputTabs({ output, outputKey, outputParams, errors, onNavigate }: OutputTabsProps) {
   const [active, setActive] = useState<'output' | 'errors'>('output')
   const { t } = useTranslation()
 
-  const displayOutput = outputKey ? t(outputKey) : output
+  const displayOutput = outputKey ? t(outputKey, outputParams) : output
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -87,7 +88,7 @@ export function OutputTabs({ output, outputKey, errors, onNavigate }: OutputTabs
                     >
                       <td className="error-table__lexeme">{err.fragment ? formatLexeme(err.fragment) : '—'}</td>
                       <td>{formatLocation(err.line, err.col)}</td>
-                      <td>{err.messageKey ? t(err.messageKey) : err.message}</td>
+                      <td>{err.messageKey ? t(err.messageKey, err.messageParams) : err.message}</td>
                     </tr>
                   ))}
                 </tbody>

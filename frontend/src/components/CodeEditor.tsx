@@ -15,6 +15,7 @@ interface CodeEditorProps {
   tabRevision: number
   output: string
   outputKey: string
+  outputParams?: Record<string, string>
   errors: AnalyzerError[]
   fontSize: number
   editorRef: MutableRefObject<EditorView | null>
@@ -22,7 +23,7 @@ interface CodeEditorProps {
   onCursorChange: (pos: { row: number; col: number }) => void
 }
 
-export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
+export function CodeEditor({ tabId, tabRevision, output, outputKey, outputParams, errors, fontSize, editorRef, onDirty, onCursorChange }: CodeEditorProps) {
   const [splitRatio, setSplitRatio] = useState(0.72)
   const containerRef = useRef<HTMLDivElement>(null)
   const mountRef = useRef<HTMLDivElement>(null)
@@ -195,6 +196,7 @@ export function CodeEditor({ tabId, tabRevision, output, outputKey, errors, font
         <OutputTabs
           output={output}
           outputKey={outputKey}
+          outputParams={outputParams}
           errors={errors}
           onNavigate={(line, col) => {
             const view = editorRef.current

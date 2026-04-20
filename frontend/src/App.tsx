@@ -70,6 +70,7 @@ export default function App() {
     srccode: () => setModal('srccode'),
     run:     actions.handleRun,
     runAntlr: actions.handleRunAntlr,
+    runSemantic: actions.handleRunSemantic,
     fontSizeUp: state.fontSizeUp,
     fontSizeDown: state.fontSizeDown,
     help:    () => setModal('help'),
@@ -95,6 +96,7 @@ export default function App() {
         tabRevision={state.tabRevision}
         output={state.output}
         outputKey={state.outputKey}
+        outputParams={state.outputParams}
         errors={state.errors}
         fontSize={state.fontSize}
         editorRef={editorRef}

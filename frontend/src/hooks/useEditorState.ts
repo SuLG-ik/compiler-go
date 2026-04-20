@@ -17,6 +17,7 @@ export interface AnalyzerError {
   fragment?: string
   message: string
   messageKey?: string
+  messageParams?: Record<string, string>
 }
 
 export interface Token {
@@ -51,6 +52,7 @@ export interface EditorState {
   loadTabContent: (tabId: number, content: string) => void
   output: string
   outputKey: string
+  outputParams: Record<string, string>
   errors: AnalyzerError[]
   tokens: Token[]
   status: StatusMsg
@@ -61,6 +63,7 @@ export interface EditorState {
   setDirty: (val: boolean) => void
   setOutput: (val: string) => void
   setOutputKey: (val: string) => void
+  setOutputParams: (val: Record<string, string>) => void
   setErrors: (val: AnalyzerError[]) => void
   setTokens: (val: Token[]) => void
   setStatus: (val: StatusMsg) => void
@@ -79,6 +82,7 @@ export function useEditorState(): EditorState {
   const [tabRevision, setTabRevision] = useState(0)
   const [output, setOutput] = useState('')
   const [outputKey, setOutputKey] = useState('')
+  const [outputParams, setOutputParams] = useState<Record<string, string>>({})
   const [errors, setErrors] = useState<AnalyzerError[]>([])
   const [tokens, setTokens] = useState<Token[]>([])
   const [status, setStatus] = useState<StatusMsg>({ key: 'status.ready' })
@@ -155,9 +159,9 @@ export function useEditorState(): EditorState {
     currentFile, dirty,
     tabs, activeTabId, tabRevision,
     addTab, removeTab, switchTab, updateTab, isTabDirty, getTab, loadTabContent,
-    output, outputKey, errors, tokens, status, cursorPos, version, fontSize,
+    output, outputKey, outputParams, errors, tokens, status, cursorPos, version, fontSize,
     setCurrentFile, setDirty,
-    setOutput, setOutputKey, setErrors, setTokens, setStatus, setCursorPos,
+    setOutput, setOutputKey, setOutputParams, setErrors, setTokens, setStatus, setCursorPos,
     handleCodeChange, fontSizeUp, fontSizeDown,
   }
 }

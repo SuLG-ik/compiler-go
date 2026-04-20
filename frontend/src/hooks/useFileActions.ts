@@ -38,6 +38,7 @@ export function useFileActions(
     addTab()
     setOutput('')
     setOutputKey('')
+    setOutputParams({})
     setErrors([])
     setTokens([])
     setStatus({ key: 'status.newDoc' })
@@ -63,6 +64,7 @@ export function useFileActions(
       }
       setOutput('')
       setOutputKey('')
+      setOutputParams({})
       setErrors([])
       setTokens([])
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
@@ -163,6 +165,7 @@ export function useFileActions(
       }
       setOutput('')
       setOutputKey('')
+      setOutputParams({})
       setErrors([])
       setTokens([])
       setStatus({ key: 'status.opened', params: { name: basename(result.path) } })
@@ -240,6 +243,7 @@ export function useFileActions(
       setStatus({ key: 'status.analyzedAntlr' })
     }).catch(err => {
       setOutputKey('')
+      setOutputParams({})
       setOutput(String(err))
       setErrors([])
       setTokens([])

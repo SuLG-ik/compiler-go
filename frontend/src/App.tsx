@@ -8,6 +8,7 @@ import { CodeEditor } from './components/CodeEditor'
 import { StatusBar } from './components/StatusBar'
 import { HelpModal } from './components/HelpModal'
 import { AboutModal } from './components/AboutModal'
+import { AstViewerModal } from './components/AstViewerModal'
 import { InfoModal } from './components/InfoModal'
 import { UnsavedDialog } from './components/UnsavedDialog'
 import { useEditorState } from './hooks/useEditorState'
@@ -16,7 +17,7 @@ import { useFileActions } from './hooks/useFileActions'
 import { useTranslation } from './i18n/I18nContext'
 import './App.css'
 
-export type ModalType = 'help' | 'about' | 'task' | 'grammar' | 'class' | 'method' | 'testex' | 'refs' | 'srccode' | null
+export type ModalType = 'help' | 'about' | 'ast' | 'task' | 'grammar' | 'class' | 'method' | 'testex' | 'refs' | 'srccode' | null
 
 export default function App() {
   const editorRef = useRef<EditorView | null>(null)
@@ -71,6 +72,7 @@ export default function App() {
     run:     actions.handleRun,
     runAntlr: actions.handleRunAntlr,
     runSemantic: actions.handleRunSemantic,
+    showAst: () => setModal('ast'),
     fontSizeUp: state.fontSizeUp,
     fontSizeDown: state.fontSizeDown,
     help:    () => setModal('help'),
@@ -115,6 +117,7 @@ export default function App() {
 
       {modal === 'help' && <HelpModal onClose={() => setModal(null)} />}
       {modal === 'about' && <AboutModal version={state.version} onClose={() => setModal(null)} />}
+      {modal === 'ast' && <AstViewerModal astText={state.outputParams.ast ?? ''} onClose={() => setModal(null)} />}
       {(modal === 'task' || modal === 'grammar' || modal === 'class' ||
         modal === 'method' || modal === 'testex' || modal === 'refs' ||
         modal === 'srccode') && (

@@ -2,7 +2,7 @@ export type CommandId =
   | 'new' | 'open' | 'save' | 'saveAs' | 'exit'
   | 'undo' | 'redo' | 'cut' | 'copy' | 'paste' | 'delete' | 'selectAll'
   | 'task' | 'grammar' | 'class' | 'method' | 'testex' | 'refs' | 'srccode'
-  | 'run' | 'runAntlr' | 'runSemantic'
+  | 'run' | 'runAntlr' | 'runSemantic' | 'showAst'
   | 'fontSizeUp' | 'fontSizeDown'
   | 'help' | 'about'
 
@@ -36,6 +36,7 @@ export const COMMANDS: CommandMeta[] = [
   { id: 'run',       label: 'Пуск',                   shortcut: 'Ctrl+R',       icon: '▶' },
   { id: 'runAntlr',  label: 'Пуск ANTLR',             shortcut: 'Ctrl+Shift+R', icon: 'Ⓐ' },
   { id: 'runSemantic', label: 'Семантический анализ', shortcut: 'Ctrl+Alt+R',   icon: 'Σ' },
+  { id: 'showAst',   label: 'Показать AST',           shortcut: 'Ctrl+Alt+A' },
   { id: 'fontSizeUp',   label: 'Увеличить шрифт',       shortcut: 'Ctrl+=',       icon: 'A+' },
   { id: 'fontSizeDown', label: 'Уменьшить шрифт',       shortcut: 'Ctrl+−',       icon: 'A−' },
   { id: 'help',      label: 'Вызов справки',          shortcut: 'F1',           icon: '❓' },

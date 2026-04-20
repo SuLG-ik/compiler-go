@@ -21,13 +21,14 @@ const TEXT_ROWS: HelpRow[] = [
   { id: 'task' }, { id: 'grammar' }, { id: 'class' }, { id: 'method' },
   { id: 'testex' }, { id: 'refs' }, { id: 'srccode' },
 ]
-const RUN_ROWS: HelpRow[]  = [{ id: 'run' }, { id: 'runAntlr' }, { id: 'runSemantic' }]
+const RUN_ROWS: HelpRow[]  = [{ id: 'run' }, { id: 'runAntlr' }, { id: 'runSemantic' }, { id: 'showAst' }]
 const HELP_ROWS: HelpRow[] = [{ id: 'help' }, { id: 'about' }]
 
 const TOOLBAR_KEYS = [
   'help.toolbar.file',
   'help.toolbar.edit',
   'help.toolbar.analysis',
+  'help.toolbar.ast',
   'help.toolbar.info',
   'help.toolbar.font',
 ] as const

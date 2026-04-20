@@ -85,7 +85,7 @@ export function Menubar({ commands }: MenubarProps) {
     },
     {
       label: t('menu.run'),
-      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr')), item('runSemantic', t('cmd.runSemantic'))],
+      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr')), item('runSemantic', t('cmd.runSemantic')), item('showAst', t('cmd.showAst'))],
     },
     {
       label: t('menu.help'),
@@ -98,6 +98,7 @@ export function Menubar({ commands }: MenubarProps) {
       const ctrl = e.ctrlKey || e.metaKey
       if (ctrl && e.shiftKey && e.key === 'R') { e.preventDefault(); cmd(commands, 'runAntlr')(); return }
       if (ctrl && e.altKey && (e.key === 'r' || e.key === 'R' || e.code === 'KeyR')) { e.preventDefault(); cmd(commands, 'runSemantic')(); return }
+      if (ctrl && e.altKey && (e.key === 'a' || e.key === 'A' || e.code === 'KeyA')) { e.preventDefault(); cmd(commands, 'showAst')(); return }
       if (ctrl && e.key === 'n') { e.preventDefault(); cmd(commands, 'new')() }
       if (ctrl && e.key === 'o') { e.preventDefault(); cmd(commands, 'open')() }
       if (ctrl && !e.shiftKey && e.key === 's') { e.preventDefault(); cmd(commands, 'save')() }

@@ -23,6 +23,7 @@ const TOOLBAR_ITEMS: ToolbarItem[] = [
   { id: 'run' },
   { id: 'runAntlr' },
   { id: 'runSemantic' },
+  { id: 'showAst' },
   { id: 'help' },
   { id: 'about' },
   { separator: true },
@@ -41,14 +42,15 @@ export function Toolbar({ commands }: ToolbarProps) {
         const m = meta(item.id)
         const label = t('cmd.' + item.id)
         const title = m.shortcut ? `${label} (${m.shortcut})` : label
+        const isTextButton = !m.icon
         return (
           <button
             key={item.id}
-            className="toolbar__btn"
+            className={`toolbar__btn ${isTextButton ? 'toolbar__btn--text' : ''}`}
             title={title}
             onClick={cmd(commands, item.id)}
           >
-            {m.icon}
+            {m.icon ?? label}
           </button>
         )
       })}

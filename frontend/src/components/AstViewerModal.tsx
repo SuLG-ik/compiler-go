@@ -1,7 +1,16 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
+import type { WheelEvent as ReactWheelEvent } from 'react'
 import { Modal } from './Modal'
 import { useTranslation } from '../i18n/I18nContext'
 import './AstViewerModal.css'
+
+const ZOOM_MIN = 0.25
+const ZOOM_MAX = 3
+const ZOOM_STEP = 0.2
+
+function clampZoom(value: number): number {
+  return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, value))
+}
 
 interface AstViewerModalProps {
   astText: string
@@ -395,6 +404,17 @@ export function AstViewerModal({ astText, onClose }: AstViewerModalProps) {
   const parseTree = useMemo(() => buildParseTree(ast), [ast])
   const totalNodes = useMemo(() => (parseTree ? countNodes(parseTree) : 0), [parseTree])
   const diagram = useMemo(() => createLayout(parseTree), [parseTree])
+  const [zoom, setZoom] = useState(1)
+
+  const zoomIn = useCallback(() => setZoom(z => clampZoom(z + ZOOM_STEP)), [])
+  const zoomOut = useCallback(() => setZoom(z => clampZoom(z - ZOOM_STEP)), [])
+  const zoomReset = useCallback(() => setZoom(1), [])
+  const handleWheel = useCallback((event: ReactWheelEvent<HTMLDivElement>) => {
+    if (!event.ctrlKey && !event.metaKey) return
+    event.preventDefault()
+    const delta = event.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP
+    setZoom(z => clampZoom(z + delta))
+  }, [])
 
   return (
     <Modal title={t('astViewer.title')} onClose={onClose} width={1120} height={720}>
@@ -403,13 +423,20 @@ export function AstViewerModal({ astText, onClose }: AstViewerModalProps) {
           <>
             <div className="ast-viewer__summary">
               <p className="ast-viewer__hint">{t('astViewer.hint')}</p>
-              <span className="ast-viewer__count">{t('astViewer.nodeCount', { count: String(totalNodes) })}</span>
+              <div className="ast-viewer__controls">
+                <span className="ast-viewer__count">{t('astViewer.nodeCount', { count: String(totalNodes) })}</span>
+                <div className="ast-viewer__zoom" role="group" aria-label="Zoom">
+                  <button type="button" className="ast-viewer__zoom-btn" onClick={zoomOut} disabled={zoom <= ZOOM_MIN + 1e-6} aria-label="Zoom out">−</button>
+                  <button type="button" className="ast-viewer__zoom-btn ast-viewer__zoom-btn--reset" onClick={zoomReset} aria-label="Reset zoom">{Math.round(zoom * 100)}%</button>
+                  <button type="button" className="ast-viewer__zoom-btn" onClick={zoomIn} disabled={zoom >= ZOOM_MAX - 1e-6} aria-label="Zoom in">+</button>
+                </div>
+              </div>
             </div>
-            <div className="ast-viewer__canvas">
+            <div className="ast-viewer__canvas" onWheel={handleWheel}>
               <svg
                 className="ast-diagram"
-                width={diagram.width}
-                height={diagram.height}
+                width={diagram.width * zoom}
+                height={diagram.height * zoom}
                 viewBox={`0 0 ${diagram.width} ${diagram.height}`}
                 role="img"
                 aria-label={t('astViewer.title')}
@@ -446,9 +473,6 @@ export function AstViewerModal({ astText, onClose }: AstViewerModalProps) {
             <p className="ast-viewer__empty-text">{t('astViewer.emptyHint')}</p>
           </div>
         )}
-      </div>
-      <div className="modal__footer">
-        <button className="btn btn--primary" onClick={onClose}>{t('modal.close')}</button>
       </div>
     </Modal>
   )

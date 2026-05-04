@@ -31,6 +31,52 @@
   font-weight: 600;
 }
 
+.ast-viewer__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ast-viewer__zoom {
+  display: inline-flex;
+  align-items: stretch;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.ast-viewer__zoom-btn {
+  appearance: none;
+  background: #ffffff;
+  border: none;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #222222;
+  cursor: pointer;
+  min-width: 28px;
+}
+
+.ast-viewer__zoom-btn + .ast-viewer__zoom-btn {
+  border-left: 1px solid #e2e2e2;
+}
+
+.ast-viewer__zoom-btn:hover:not(:disabled) {
+  background: #f0f0f0;
+}
+
+.ast-viewer__zoom-btn:disabled {
+  color: #b5b5b5;
+  cursor: default;
+}
+
+.ast-viewer__zoom-btn--reset {
+  min-width: 52px;
+  font-variant-numeric: tabular-nums;
+}
+
 .ast-viewer__canvas {
   flex: 1;
   min-height: 0;

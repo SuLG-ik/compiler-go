@@ -1,3 +1,0 @@
-fun answer(): Int {
-return 42
-};

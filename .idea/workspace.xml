@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="19cacf72-e5ef-4062-8cd6-23782c3e4284" name="Changes" comment="ast">
+      <change afterPath="$PROJECT_DIR$/lab7/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/SCREENSHOTS.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ast/general_ast.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ast/variant_ast.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.square.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.square.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/._Z6squarei.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/.main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/.main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/.main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.dot" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/diff/general_O0_vs_O2.diff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/diff/variant_O0_vs_O2.diff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0_no_optnone.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O2.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_opt_O2_via_opt.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O0.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O2.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_always_inline.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_opt_O2.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_always_inline_O0_no_optnone.ll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/artifacts/run_output.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/images/manual/01_installation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/scripts/run_in_docker.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/scripts/run_lab7.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/general.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/variant_always_inline.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab7/src/variant_functions.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/VERSION" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/analyzer.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/analyzer_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlr/KotlinFunction.g4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlr_analyzer.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlr_analyzer_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunction.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunction.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunctionLexer.interp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunctionLexer.tokens" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/kotlinfunction_lexer.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/kotlinfunction_parser.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ast.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/appicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/darwin/Info.dev.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/darwin/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/windows/icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/windows/info.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/windows/installer/project.nsi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/windows/installer/wails_tools.nsh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/windows/wails.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dialogs.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/antlr_lexer_error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/antlr_valid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/ast_lab5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_01_missing_semicolon.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_02_missing_function_name.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_03_missing_return_type.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_04_missing_param_colon.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_05_missing_return_keyword.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_06_trailing_comma.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_07_invalid_character.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_08_invalid_float_literal.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_09_multiple_errors.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_01_duplicate_param.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_02_undeclared_ident.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_03_return_type_mismatch.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_04_boolean_in_arith.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_05_int_overflow.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_01_empty_params.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_02_many_params.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_03_float_average.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_04_boolean_param.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_05_nested_expression.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/examples/valid_06_identifiers_with_underscore.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/expr_error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/header_error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/lexer_fsm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/main_window.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/menu_edit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/menu_file.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/parser_method.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/toolbar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/valid.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/file.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json.md5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/commands.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AstViewerModal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AstViewerModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CodeEditor.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/CodeEditor.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditorTabs.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditorTabs.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/HelpModal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/HelpModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/InfoModal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Menubar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Menubar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modal.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modal.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/OutputTabs.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/OutputTabs.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StatusBar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/StatusBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Toolbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Toolbar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/UnsavedDialog.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useEditorState.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useFileActions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/I18nContext.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/en.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/ru.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/lang/customLang.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/stores/docStore.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/vite-env.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.node.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/vite.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexer_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/semantic.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/semantic_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/antlr-4.13.1-complete.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tools/generate_antlr.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wails.json" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.26.0" />
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="curse-work" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Klikta-app&quot;
+  }
+}</component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="Рефакторинг" />
+        <option name="rewordedMessage" value="Рефакторинг" />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="b1758c96f3e13f9d5df6f009f63652758c4e4e38" />
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/SuLG-ik/compiler-go.git&quot;,
+    &quot;accountId&quot;: &quot;80680263-cf41-466a-bb41-a81280ab3b7a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3AAUS6rCPuYA9fYvhI7cwqQpDPw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Go Build.go build compiler.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.analysis.ui.options.defaults": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "lab7",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/volodya/GolandProjects/compiler",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "/Users/volodya/GolandProjects/compiler/frontend/node_modules/typescript/lib"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$/docs/examples" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" IS_LOCATION_SIMULATION_SUPPORTED="false" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" DEVELOPMENT_TEAM="${TEAM_ID}" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
+      <embedded_app_extension_list />
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="go build compiler" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="compiler" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="compiler" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-gosdk-72a9cf600ed8-3105c3b11fe0-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-261.22158.291" />
+        <option value="bundled-js-predefined-d6986cc7102b-3bd3a6803838-JavaScript-GO-261.22158.291" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="19cacf72-e5ef-4062-8cd6-23782c3e4284" name="Changes" comment="" />
+      <created>1772034865678</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1772034865678</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Доработка до курсача">
+      <option name="closed" value="true" />
+      <created>1776194977222</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776194977222</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Доработка до курсача">
+      <option name="closed" value="true" />
+      <created>1776195015482</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776195015482</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Доработка до курсача">
+      <option name="closed" value="true" />
+      <created>1776195120025</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776195120025</updated>
+    </task>
+    <task id="LOCAL-00004" summary="antlr">
+      <option name="closed" value="true" />
+      <created>1776218789191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776218789191</updated>
+    </task>
+    <task id="LOCAL-00005" summary="antlr">
+      <option name="closed" value="true" />
+      <created>1776220393336</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776220393336</updated>
+    </task>
+    <task id="LOCAL-00006" summary="выбрана дефолтна дирректория">
+      <option name="closed" value="true" />
+      <created>1776220636351</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776220636351</updated>
+    </task>
+    <task id="LOCAL-00007" summary="выбрана дефолтна дирректория">
+      <option name="closed" value="true" />
+      <created>1776220679773</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776220679773</updated>
+    </task>
+    <task id="LOCAL-00008" summary="готово">
+      <option name="closed" value="true" />
+      <created>1776224246505</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776224246505</updated>
+    </task>
+    <task id="LOCAL-00009" summary="лаба 5">
+      <option name="closed" value="true" />
+      <created>1776664622425</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776664622425</updated>
+    </task>
+    <task id="LOCAL-00010" summary="лаба 5">
+      <option name="closed" value="true" />
+      <created>1776665405751</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776665405751</updated>
+    </task>
+    <task id="LOCAL-00011" summary="лаба 5 + мб доп">
+      <option name="closed" value="true" />
+      <created>1776666053881</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776666053881</updated>
+    </task>
+    <task id="LOCAL-00012" summary="лаба 5 + мб доп">
+      <option name="closed" value="true" />
+      <created>1776667007232</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1776667007232</updated>
+    </task>
+    <task id="LOCAL-00013" summary="лаба 5 + мб доп">
+      <option name="closed" value="true" />
+      <created>1776667181039</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776667181039</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ast">
+      <option name="closed" value="true" />
+      <created>1777872369985</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1777872369985</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Обновлен README" />
+    <MESSAGE value="доп пункты" />
+    <MESSAGE value="Убарн линтер и тесты" />
+    <MESSAGE value="Переписан build.yml" />
+    <MESSAGE value="Фикс build.yml" />
+    <MESSAGE value="Фикс build.yml 2" />
+    <MESSAGE value="Фикс build.yml 3" />
+    <MESSAGE value="Фикс build.yml 4" />
+    <MESSAGE value="Фикс build.yml 5" />
+    <MESSAGE value="Фикс build.yml 6" />
+    <MESSAGE value="Фикс build.yml 7" />
+    <MESSAGE value="Фикс build.yml 8" />
+    <MESSAGE value="Рефакторинг" />
+    <MESSAGE value="Обновление доки" />
+    <MESSAGE value="Лексер" />
+    <MESSAGE value="ЛАБА 3" />
+    <MESSAGE value="Доработка до курсача" />
+    <MESSAGE value="antlr" />
+    <MESSAGE value="выбрана дефолтна дирректория" />
+    <MESSAGE value="выбрана дефолтна дирректория" />
+    <MESSAGE value="готово" />
+    <MESSAGE value="лаба 5" />
+    <MESSAGE value="лаба 5 + мб доп" />
+    <MESSAGE value="ast" />
+    <option name="LAST_COMMIT_MESSAGE" value="ast" />
+  </component>
+  <component name="VgoModernizerVersionTracker">
+    <upgrades>
+      <map>
+        <entry key="$PROJECT_DIR$/go.mod">
+          <value>
+            <VersionUpgradeInfo>
+              <version>1.26.0</version>
+              <timestamp>1772036329697</timestamp>
+            </VersionUpgradeInfo>
+          </value>
+        </entry>
+      </map>
+    </upgrades>
+  </component>
+</project>

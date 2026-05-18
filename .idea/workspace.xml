@@ -4,168 +4,64 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19cacf72-e5ef-4062-8cd6-23782c3e4284" name="Changes" comment="ast">
-      <change afterPath="$PROJECT_DIR$/lab7/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/SCREENSHOTS.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ast/general_ast.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ast/variant_ast.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.square.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.square.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/._Z6squarei.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/.main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/.main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/.main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.dot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/diff/general_O0_vs_O2.diff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/diff/variant_O0_vs_O2.diff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0_no_optnone.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_O2.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/general_opt_O2_via_opt.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O0.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O2.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_always_inline.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_opt_O2.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/ir/variant_always_inline_O0_no_optnone.ll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/artifacts/run_output.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/images/manual/01_installation.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/scripts/run_in_docker.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/scripts/run_lab7.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/general.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/variant_always_inline.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab7/src/variant_functions.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/VERSION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analyzer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/analyzer_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlr/KotlinFunction.g4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlr_analyzer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlr_analyzer_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunction.interp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunction.tokens" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunctionLexer.interp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/KotlinFunctionLexer.tokens" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/kotlinfunction_lexer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/antlrgen/antlr/kotlinfunction_parser.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ast.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/appicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/darwin/Info.dev.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/darwin/Info.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/windows/icon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/windows/info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/windows/installer/project.nsi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/windows/installer/wails_tools.nsh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/windows/wails.exe.manifest" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dialogs.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/antlr_lexer_error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/antlr_valid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/ast_lab5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_01_missing_semicolon.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_02_missing_function_name.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_03_missing_return_type.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_04_missing_param_colon.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_05_missing_return_keyword.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_06_trailing_comma.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_07_invalid_character.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_08_invalid_float_literal.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/invalid_09_multiple_errors.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_01_duplicate_param.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_02_undeclared_ident.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_03_return_type_mismatch.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_04_boolean_in_arith.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/semantic_05_int_overflow.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_01_empty_params.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_02_many_params.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_03_float_average.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_04_boolean_param.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_05_nested_expression.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/examples/valid_06_identifiers_with_underscore.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/expr_error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/header_error.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/lexer_fsm.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/main_window.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/menu_edit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/menu_file.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/parser_method.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/toolbar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/valid.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/file.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json.md5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/commands.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AboutModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AstViewerModal.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AstViewerModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CodeEditor.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/CodeEditor.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditorTabs.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditorTabs.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HelpModal.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HelpModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/InfoModal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Menubar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Menubar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modal.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Modal.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/OutputTabs.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/OutputTabs.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/StatusBar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/StatusBar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Toolbar.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Toolbar.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/UnsavedDialog.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useEditorState.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/hooks/useFileActions.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/I18nContext.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/en.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/i18n/ru.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/lang/customLang.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/stores/docStore.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/vite-env.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/tsconfig.node.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/vite.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexer_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/parser_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/semantic.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/semantic_test.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/antlr-4.13.1-complete.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tools/generate_antlr.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wails.json" beforeDir="false" />
+    <list default="true" id="19cacf72-e5ef-4062-8cd6-23782c3e4284" name="Changes" comment="lab7">
+      <change beforePath="$PROJECT_DIR$/lab7/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/SCREENSHOTS.md" beforeDir="false" afterPath="$PROJECT_DIR$/SCREENSHOTS.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ast/general_ast.txt" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ast/general_ast.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ast/variant_ast.txt" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ast/variant_ast.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/.main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/.square.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/.square.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/cfg_main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_main.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/cfg_main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/cfg_square.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O0/cfg_square.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O0/cfg_square.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/.main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/.square.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/.square.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/cfg_main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_main.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/cfg_main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/cfg_square.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/general_O2/cfg_square.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/general_O2/cfg_square.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/._Z6squarei.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/._Z6squarei.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/.main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/.main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/cfg__Z6squarei.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg__Z6squarei.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/cfg__Z6squarei.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/cfg_main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O0/cfg_main.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O0/cfg_main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/.main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O2/.main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O2/cfg_main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_O2/cfg_main.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_O2/cfg_main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/.main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_always_inline/.main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.dot" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_always_inline/cfg_main.dot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/cfg/variant_always_inline/cfg_main.png" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/cfg/variant_always_inline/cfg_main.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/diff/general_O0_vs_O2.diff" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/diff/general_O0_vs_O2.diff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/diff/variant_O0_vs_O2.diff" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/diff/variant_O0_vs_O2.diff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/general_O0.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/general_O0_no_optnone.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/general_O0_no_optnone.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/general_O2.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/general_O2.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/general_opt_O2_via_opt.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/general_opt_O2_via_opt.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O0.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/variant_O0.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/variant_O2.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/variant_O2.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_always_inline.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/variant_after_always_inline.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/variant_after_opt_O2.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/variant_after_opt_O2.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/ir/variant_always_inline_O0_no_optnone.ll" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/ir/variant_always_inline_O0_no_optnone.ll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/artifacts/run_output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/run_output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/image-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/image-1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/image-2.png" beforeDir="false" afterPath="$PROJECT_DIR$/image-2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/image-3.png" beforeDir="false" afterPath="$PROJECT_DIR$/image-3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/image.png" beforeDir="false" afterPath="$PROJECT_DIR$/image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/general_cfg_main_O0.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/general_cfg_main_O0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/general_cfg_main_O2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/general_cfg_main_O2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/general_cfg_square_O0.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/general_cfg_square_O0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/general_cfg_square_O2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/general_cfg_square_O2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/variant_cfg__Z6squarei_O0.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/variant_cfg__Z6squarei_O0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/variant_cfg_main_O0.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/variant_cfg_main_O0.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/variant_cfg_main_O2.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/variant_cfg_main_O2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/generated/variant_cfg_main_always_inline.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/generated/variant_cfg_main_always_inline.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/images/manual/01_installation.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/manual/01_installation.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/general.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/general.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/variant_always_inline.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/variant_always_inline.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab7/src/variant_functions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/variant_functions.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,41 +111,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Go Build.go build compiler.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.go.analysis.ui.options.defaults": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "lab7",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/volodya/GolandProjects/compiler",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "/Users/volodya/GolandProjects/compiler/frontend/node_modules/typescript/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Go Build.go build compiler.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.analysis.ui.options.defaults&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;lab7&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/volodya/GolandProjects/compiler&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/volodya/GolandProjects/compiler/frontend/node_modules/typescript/lib&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docs" />
       <recent name="$PROJECT_DIR$/docs/examples" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">
@@ -397,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777872369985</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="lab7">
+      <option name="closed" value="true" />
+      <created>1779082107825</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1779082107825</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -451,7 +355,8 @@
     <MESSAGE value="лаба 5" />
     <MESSAGE value="лаба 5 + мб доп" />
     <MESSAGE value="ast" />
-    <option name="LAST_COMMIT_MESSAGE" value="ast" />
+    <MESSAGE value="lab7" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab7" />
   </component>
   <component name="VgoModernizerVersionTracker">
     <upgrades>

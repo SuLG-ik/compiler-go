@@ -23,6 +23,7 @@ const TOOLBAR_ITEMS: ToolbarItem[] = [
   { id: 'run' },
   { id: 'runAntlr' },
   { id: 'runSemantic' },
+  { id: 'runPoliz' },
   { id: 'showAst' },
   { id: 'help' },
   { id: 'about' },

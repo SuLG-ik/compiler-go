@@ -73,6 +73,7 @@ export default function App() {
     runAntlr: actions.handleRunAntlr,
     runSemantic: actions.handleRunSemantic,
     runPoliz: actions.handleRunPoliz,
+    runLab7: actions.handleRunLab7,
     showAst: () => setModal('ast'),
     fontSizeUp: state.fontSizeUp,
     fontSizeDown: state.fontSizeDown,

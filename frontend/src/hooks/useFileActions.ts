@@ -10,6 +10,7 @@ import {
   RunAntlrAnalyzer,
   RunSemanticAnalyzer,
   RunPoliz,
+  RunLab7Optimizer,
   AllowQuit,
 } from '../../wailsjs/go/main/App'
 import { docStore } from '../stores/docStore'
@@ -292,13 +293,33 @@ export function useFileActions(
     })
   }
 
+  function handleRunLab7() {
+    const activeCode = getActiveCode()
+    setStatus({ key: 'status.analyzingLab7' })
+    RunLab7Optimizer(activeCode).then(result => {
+      setOutputKey(result.outputKey ?? '')
+      setOutputParams(result.outputParams ?? {})
+      setOutput(result.outputKey ? '' : (result.output ?? ''))
+      setErrors(result.errors ?? [])
+      setTokens(result.tokens ?? [])
+      setStatus({ key: 'status.analyzedLab7' })
+    }).catch(err => {
+      setOutputKey('')
+      setOutputParams({})
+      setOutput(String(err))
+      setErrors([])
+      setTokens([])
+      setStatus({ key: 'status.errorAnalysis' })
+    })
+  }
+
 
   return {
     unsaved, setUnsaved,
     handleNew, handleOpen, handleSave, handleSaveAs, handleExit,
     handleUndo, handleRedo, handleCut, handleCopy, handlePaste,
     handleDelete, handleSelectAll,
-    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr, handleRunSemantic, handleRunPoliz,
+    handleCloseTab, handleFileDrop, handleRun, handleRunAntlr, handleRunSemantic, handleRunPoliz, handleRunLab7,
   }
 }
 

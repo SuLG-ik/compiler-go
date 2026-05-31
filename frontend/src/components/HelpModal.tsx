@@ -21,7 +21,7 @@ const TEXT_ROWS: HelpRow[] = [
   { id: 'task' }, { id: 'grammar' }, { id: 'class' }, { id: 'method' },
   { id: 'testex' }, { id: 'refs' }, { id: 'srccode' },
 ]
-const RUN_ROWS: HelpRow[]  = [{ id: 'run' }, { id: 'runAntlr' }, { id: 'runSemantic' }, { id: 'runPoliz' }, { id: 'showAst' }]
+const RUN_ROWS: HelpRow[]  = [{ id: 'run' }, { id: 'runAntlr' }, { id: 'runSemantic' }, { id: 'runPoliz' }, { id: 'runLab7' }, { id: 'showAst' }]
 const HELP_ROWS: HelpRow[] = [{ id: 'help' }, { id: 'about' }]
 
 const TOOLBAR_KEYS = [

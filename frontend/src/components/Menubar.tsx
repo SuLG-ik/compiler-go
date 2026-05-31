@@ -85,7 +85,7 @@ export function Menubar({ commands }: MenubarProps) {
     },
     {
       label: t('menu.run'),
-      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr')), item('runSemantic', t('cmd.runSemantic')), item('runPoliz', t('cmd.runPoliz')), item('showAst', t('cmd.showAst'))],
+      items: [item('run', t('cmd.run')), item('runAntlr', t('cmd.runAntlr')), item('runSemantic', t('cmd.runSemantic')), item('runPoliz', t('cmd.runPoliz')), item('runLab7', t('cmd.runLab7')), item('showAst', t('cmd.showAst'))],
     },
     {
       label: t('menu.help'),
@@ -99,6 +99,7 @@ export function Menubar({ commands }: MenubarProps) {
       if (ctrl && e.shiftKey && e.key === 'R') { e.preventDefault(); cmd(commands, 'runAntlr')(); return }
       if (ctrl && e.altKey && (e.key === 'r' || e.key === 'R' || e.code === 'KeyR')) { e.preventDefault(); cmd(commands, 'runSemantic')(); return }
       if (ctrl && e.altKey && (e.key === 'p' || e.key === 'P' || e.code === 'KeyP')) { e.preventDefault(); cmd(commands, 'runPoliz')(); return }
+      if (ctrl && e.altKey && (e.key === 'o' || e.key === 'O' || e.code === 'KeyO')) { e.preventDefault(); cmd(commands, 'runLab7')(); return }
       if (ctrl && e.altKey && (e.key === 'a' || e.key === 'A' || e.code === 'KeyA')) { e.preventDefault(); cmd(commands, 'showAst')(); return }
       if (ctrl && e.key === 'n') { e.preventDefault(); cmd(commands, 'new')() }
       if (ctrl && e.key === 'o') { e.preventDefault(); cmd(commands, 'open')() }

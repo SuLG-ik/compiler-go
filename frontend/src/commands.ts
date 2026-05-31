@@ -2,7 +2,7 @@ export type CommandId =
   | 'new' | 'open' | 'save' | 'saveAs' | 'exit'
   | 'undo' | 'redo' | 'cut' | 'copy' | 'paste' | 'delete' | 'selectAll'
   | 'task' | 'grammar' | 'class' | 'method' | 'testex' | 'refs' | 'srccode'
-  | 'run' | 'runAntlr' | 'runSemantic' | 'runPoliz' | 'showAst'
+  | 'run' | 'runAntlr' | 'runSemantic' | 'runPoliz' | 'runLab7' | 'showAst'
   | 'fontSizeUp' | 'fontSizeDown'
   | 'help' | 'about'
 
@@ -37,6 +37,7 @@ export const COMMANDS: CommandMeta[] = [
   { id: 'runAntlr',  label: 'Пуск ANTLR',             shortcut: 'Ctrl+Shift+R', icon: 'Ⓐ' },
   { id: 'runSemantic', label: 'Семантический анализ', shortcut: 'Ctrl+Alt+R',   icon: 'Σ' },
   { id: 'runPoliz',  label: 'Вычислить ПОЛИЗ',        shortcut: 'Ctrl+Alt+P' },
+  { id: 'runLab7',   label: 'ЛР7 IR',                 shortcut: 'Ctrl+Alt+O' },
   { id: 'showAst',   label: 'Показать AST',           shortcut: 'Ctrl+Alt+A' },
   { id: 'fontSizeUp',   label: 'Увеличить шрифт',       shortcut: 'Ctrl+=',       icon: 'A+' },
   { id: 'fontSizeDown', label: 'Уменьшить шрифт',       shortcut: 'Ctrl+−',       icon: 'A−' },
